@@ -1,19 +1,61 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Hello World!</title>
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
 
-    <script>
-      // You can also require other files to run in this process
-      require('./renderer.js')
-    </script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <title>Hello World!</title>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.3.0/milligram.min.css">
+  <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+  <div id="vueapp">
+    <h1>Hello Worlds!</h1>
+    <div class="container">
+      <table>
+        <thead>
+          <tr>
+            <th>Wallet Adress</th>
+            <th>Worker Name</th>
+            <th>Password</th>
+            <th>Currency</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="text" v-model="walletadress"></td>
+            <td><input type="text" v-model="workername"></td>
+            <td><input type="text" v-model="password"></td>
+            <td><input type="text" v-model="prefcurrency"></td>
+          </tr>
+          <tr>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row special">
+        <div class="column column-25">
+          <button class="button" href="#">MiningPoolHub</button>
+        </div>
+        <div class="column column-25">
+          <button class="button" href="#">Hash Refinery</button>
+        </div>
+        <div class="column column-25">
+          <button class="button" href="#">ZPool</button>
+        </div>
+        <div class="column column-25">
+          <button class="button" href="#">HashingPool</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- All of the Node.js APIs are available in this renderer process. -->
+
+  <script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+    require('./vuemain.js')
+  </script>
+</body>
+
 </html>

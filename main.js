@@ -1,6 +1,6 @@
 const {app, BrowserWindow} = require('electron')
 
-const electron-reload = require('electron-reload')(__dirname, {
+require('electron-reload')(__dirname, {
   electron: require('electron-prebuilt')
 });
 
@@ -13,7 +13,7 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600, resizable: false})
+  mainWindow = new BrowserWindow({width: 900, height: 600, resizable: false})
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({

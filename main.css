@@ -1,7 +1,11 @@
 body {
   background-color: rgb(80, 80, 80);
+  display: block;
 }
 
+.button {
+  width: 200px;
+}
 
 .column {
 }

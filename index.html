@@ -16,35 +16,51 @@
       <table>
         <thead>
           <tr>
-            <th>Wallet Adress</th>
-            <th>Worker Name</th>
-            <th>Password</th>
-            <th>Currency</th>
+
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><input type="text" v-model="walletadress"></td>
-            <td><input type="text" v-model="workername"></td>
-            <td><input type="text" v-model="password"></td>
+            <td>Preferred Currency:</td>
             <td><input type="text" v-model="prefcurrency"></td>
           </tr>
           <tr>
+            <td>Wallet Adress:</td>
+            <td><input type="text" v-model="walletadress"></td>
+          </tr>
+          <tr>
+            <td>Worker Login:</td>
+            <td><input type="text" v-model="workerlogin"></td>
+          </tr>
+          <tr>
+            <td>Worker Name:</td>
+            <td><input type="text" v-model="workername"></td>
+          </tr>
+          <tr>
+            <td>Password</td>
+            <td><input type="text" v-model="password"></td>
+          </tr>
+          <tr>
+            <div v-for="algo in totalAlgos" class="row special">
+              <input type="checkbox" id="algo" v-bind:value="algo" v-model="checkedAlgos">
+              <label for="algo">{{ algo }}</label>
+            </div>
           </tr>
         </tbody>
       </table>
+      <span>Checked names: {{ checkedAlgos }}</span>
       <div class="row special">
         <div class="column column-25">
-          <button class="button" href="#">MiningPoolHub</button>
+          <button v-on:click="startMining()" class="button" href="#">MiningPoolHub</button>
         </div>
         <div class="column column-25">
-          <button class="button" href="#">Hash Refinery</button>
+          <button v-on:click="startMining()" class="button" href="#">Hash Refinery</button>
         </div>
         <div class="column column-25">
-          <button class="button" href="#">ZPool</button>
+          <button v-on:click="startMining()" class="button" href="#">ZPool</button>
         </div>
         <div class="column column-25">
-          <button class="button" href="#">HashingPool</button>
+          <button v-on:click="startMining()" class="button" href="#">HashingPool</button>
         </div>
       </div>
     </div>

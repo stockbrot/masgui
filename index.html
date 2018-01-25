@@ -41,26 +41,38 @@
             <td><input type="text" v-model="password"></td>
           </tr>
           <tr>
-            <div v-for="algo in totalAlgos" class="row special">
-              <input type="checkbox" id="algo" v-bind:value="algo" v-model="checkedAlgos">
-              <label for="algo">{{ algo }}</label>
-            </div>
+            <td>Location</td>
+            <td><input type="text" v-model="location"></td>
+          </tr>
+          <tr>
+            <td>Password</td>
+            <td><input type="text" v-model="password"></td>
+          </tr>
+          <tr>
+            <td>Number of GPU's</td>
+            <td><input type="text" v-model="gpunum"></td>
           </tr>
         </tbody>
       </table>
-      <span>Checked names: {{ checkedAlgos }}</span>
+      <div class="row">
+        <div class="column" v-for="algo in totalAlgos">
+          <input type="checkbox" id="algo" v-bind:value="algo" v-model="checkedAlgos">
+          <label for="algo">{{ algo }}</label>
+        </div>
+
+      </div>
       <div class="row special">
         <div class="column column-25">
-          <button v-on:click="startMining()" class="button" href="#">MiningPoolHub</button>
+          <button v-on:click="startMining" class="button" href="#">MiningPoolHub</button>
         </div>
         <div class="column column-25">
-          <button v-on:click="startMining()" class="button" href="#">Hash Refinery</button>
+          <button v-on:click="startMining" class="button" href="#">Hash Refinery</button>
         </div>
         <div class="column column-25">
-          <button v-on:click="startMining()" class="button" href="#">ZPool</button>
+          <button v-on:click="startMining" class="button" href="#">ZPool</button>
         </div>
         <div class="column column-25">
-          <button v-on:click="startMining()" class="button" href="#">HashingPool</button>
+          <button v-on:click="startMining" class="button" href="#">HashingPool</button>
         </div>
       </div>
     </div>

@@ -71,8 +71,8 @@ const vueapp = new Vue({
       this.command = [
         // "powershell -version 5.0 -noexit -executionpolicy bypass -windowstyle maximized -command \"&.\\NemosMiner-v2.4.1.ps1",
         "&.\\scripts\\NemosMiner-v2.4.1.ps1",
-        "-SelGPUDSTM '" + this.gpuNumbers.gpus + "'",
-        "-SelGPUCC '" + this.gpuNumbers.gpuc + "'",
+        "-SelGPUDSTM " + this.gpuNumbers.gpus,
+        "-SelGPUCC " + this.gpuNumbers.gpuc,
         "-Currency USD",
         "-Passwordcurrency " + this.prefcurrency,
         "-Interval 30",

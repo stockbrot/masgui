@@ -39,9 +39,7 @@ const vueapp = new Vue({
         inputFormat: 'text'
       });
       // console.log(this.Algos)
-      ps.addCommand("&.\\scripts\\NemosMiner-v2.4.1.ps1 -SelGPUDSTM '0' -SelGPUCC '0' -Currency USD -Passwordcurrency DGB -interval 30 -Wallet D5STb4D1RDa1qXv4x2DX9YgAfPub9rRVrQ -Location US -ActiveMinerGainPct 3 -PoolName hashrefinery -WorkerName ID=NemosMiner-v2.4.1 -Type nvidia -Algorithm skunk,phi,tribus,skein,bitcore,Nist5,Lyra2RE2,neoscrypt,yescrypt -Donate 0")
-      // ps.addCommand("&.\\NemosMiner-v2.4.1.ps1 -SelGPUDSTM '0' -SelGPUCC '0' -Currency USD -Passwordcurrency DGB -interval 30 -Wallet D5STb4D1RDa1qXv4x2DX9YgAfPub9rRVrQ -Location US -ActiveMinerGainPct 3 -PoolName hashrefinery -WorkerName ID=NemosMiner-v2.4.1 -Type nvidia -Algorithm skunk,phi,tribus,skein,bitcore,Nist5,Lyra2RE2,neoscrypt,yescrypt -Donate 0")
-      // ps.addCommand(this.Algos)
+      ps.addCommand(this.Algos) // -SelGPUDSTM '0' -SelGPUCC '0' -Currency USD -Passwordcurrency DGB -interval 30 -Wallet D5STb4D1RDa1qXv4x2DX9YgAfPub9rRVrQ -Location US -ActiveMinerGainPct 3 -PoolName hashrefinery -WorkerName ID=NemosMiner-v2.4.1 -Type nvidia -Algorithm skunk,phi,tribus,skein,bitcore,Nist5,Lyra2RE2,neoscrypt,yescrypt -Donate 0")
       ps.invoke()
       .then(output => {
         console.log(output);
@@ -75,9 +73,9 @@ const vueapp = new Vue({
         "&.\\scripts\\NemosMiner-v2.4.1.ps1",
         "-SelGPUDSTM '" + this.gpuNumbers.gpus + "'",
         "-SelGPUCC '" + this.gpuNumbers.gpuc + "'",
-        "-Currency \'USD\'",
+        "-Currency USD",
         "-Passwordcurrency " + this.prefcurrency,
-        "-interval 30",
+        "-Interval 30",
         "-Wallet " + this.walletadress,
         "-Location " + this.location,
         "-ActiveMinerGainPct 3",

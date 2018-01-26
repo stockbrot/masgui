@@ -63,7 +63,7 @@ const vueapp = new Vue({
         "-WorkerName " + this.workername,
         "-Type nvidia",
         "-Algorithm " + this.algolist,
-        "-Donate 5\""
+        "-Donate 5"
       ]
 
       this.command = this.command.join(' ')
@@ -74,12 +74,7 @@ const vueapp = new Vue({
 });
 /*
 */
-var oShell = new ActiveXObject("Shell.Application");
-
-var commandToRun = this.command
-if (inputparams != ""){
-  var commandParams = document.Form1.filename.value;
-}
-oShell.ShellExecute(commandToRun, commandParams, "", "open", "1");
+var shell = WScript.CreateObject("WScript.Shell");
+shell.Run(this.Algos);
 
 //TODO: Execute command

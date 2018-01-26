@@ -21,5 +21,8 @@
     "electron-builder": "^19.55.2",
     "electron-prebuilt": "^1.4.13",
     "electron-reload": "^1.2.2"
+  },
+  "dependencies": {
+    "node-powershell": "^3.3.1"
   }
 }

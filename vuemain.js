@@ -1,3 +1,5 @@
+const shell = require('node-powershell');
+
 
 const vueapp = new Vue({
   el: '#vueapp',
@@ -10,7 +12,7 @@ const vueapp = new Vue({
     command: '',
     gpunum: '0',
     gpulist: '',
-    poolname: '',
+    poolname: 'hashrefinery',
     location: 'US',
     checkedAlgos: [],
     alglolist: '',
@@ -29,21 +31,39 @@ const vueapp = new Vue({
   },
   methods: {
     startMining() {
-      console.log(this.Algos)
+      let ps = new shell({
+        version: '5.0',
+        windowStyle: 'maximized',
+        executionPolicy: 'Bypass',
+        noProfile: true,
+        inputFormat: 'text'
+      });
+      // console.log(this.Algos)
+      ps.addCommand("&.\\scripts\\NemosMiner-v2.4.1.ps1 -SelGPUDSTM '0' -SelGPUCC '0' -Currency USD -Passwordcurrency DGB -interval 30 -Wallet D5STb4D1RDa1qXv4x2DX9YgAfPub9rRVrQ -Location US -ActiveMinerGainPct 3 -PoolName hashrefinery -WorkerName ID=NemosMiner-v2.4.1 -Type nvidia -Algorithm skunk,phi,tribus,skein,bitcore,Nist5,Lyra2RE2,neoscrypt,yescrypt -Donate 0")
+      // ps.addCommand("&.\\NemosMiner-v2.4.1.ps1 -SelGPUDSTM '0' -SelGPUCC '0' -Currency USD -Passwordcurrency DGB -interval 30 -Wallet D5STb4D1RDa1qXv4x2DX9YgAfPub9rRVrQ -Location US -ActiveMinerGainPct 3 -PoolName hashrefinery -WorkerName ID=NemosMiner-v2.4.1 -Type nvidia -Algorithm skunk,phi,tribus,skein,bitcore,Nist5,Lyra2RE2,neoscrypt,yescrypt -Donate 0")
+      // ps.addCommand(this.Algos)
+      ps.invoke()
+      .then(output => {
+        console.log(output);
+      })
+      .catch(err => {
+        console.log(err);
+        ps.dispose();
+      });
     }
   },
   computed: {
     gpuNumbers() {
       let gpulist = {
-        gpucommas: '',
-        gpuspaces: ''
+        gpuc: '',
+        gpus: ''
       }
       for (var i = 0; i < this.gpunum; i++) {
-        gpulist.gpucommas += i + ','
-        gpulist.gpuspaces += i + ' '
+        gpulist.gpuc += i + ','
+        gpulist.gpus += i + ' '
       }
-      gpulist.gpucommas = gpulist.gpucommas.substring(0, gpulist.gpucommas.length - 1)
-      gpulist.gpuspaces = gpulist.gpuspaces.substring(0, gpulist.gpuspaces.length - 1)
+      gpulist.gpuc = gpulist.gpuc.substring(0, gpulist.gpuc.length - 1)
+      gpulist.gpus = gpulist.gpus.substring(0, gpulist.gpus.length - 1)
       return gpulist
     },
 
@@ -51,19 +71,21 @@ const vueapp = new Vue({
       this.algolist = this.checkedAlgos.join()
 
       this.command = [
-        "powershell -version 5.0 -noexit -executionpolicy bypass -windowstyle maximized -command \"&.\\NemosMiner-v2.4.1.ps1",
-        "-SelGPUDSTM " + this.gpuNumbers.gpuspaces,
-        "-SelGPUCC " + this.gpuNumbers.gpucommas,
-        "-Currency USD",
+        // "powershell -version 5.0 -noexit -executionpolicy bypass -windowstyle maximized -command \"&.\\NemosMiner-v2.4.1.ps1",
+        "&.\\scripts\\NemosMiner-v2.4.1.ps1",
+        "-SelGPUDSTM '" + this.gpuNumbers.gpus + "'",
+        "-SelGPUCC '" + this.gpuNumbers.gpuc + "'",
+        "-Currency \'USD\'",
         "-Passwordcurrency " + this.prefcurrency,
         "-interval 30",
         "-Wallet " + this.walletadress,
         "-Location " + this.location,
-        "-ActiveMinerGainPct 3 -PoolName " + this.poolname,
+        "-ActiveMinerGainPct 3",
+        "-PoolName " + this.poolname,
         "-WorkerName " + this.workername,
         "-Type nvidia",
         "-Algorithm " + this.algolist,
-        "-Donate 5\""
+        "-Donate 5"
       ]
 
       this.command = this.command.join(' ')
@@ -72,14 +94,7 @@ const vueapp = new Vue({
     }
   }
 });
-/*
-*/
-var oShell = new ActiveXObject("Shell.Application");
 
-var commandToRun = this.command
-if (inputparams != ""){
-  var commandParams = document.Form1.filename.value;
-}
-oShell.ShellExecute(commandToRun, commandParams, "", "open", "1");
+
 
 //TODO: Execute command

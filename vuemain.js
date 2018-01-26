@@ -14,6 +14,7 @@ const vueapp = new Vue({
     gpulist: '',
     poolname: 'hashrefinery',
     location: 'US',
+    donate: '5',
     checkedAlgos: [],
     alglolist: '',
     totalAlgos: [
@@ -83,7 +84,7 @@ const vueapp = new Vue({
         "-WorkerName " + this.workername,
         "-Type nvidia",
         "-Algorithm " + this.algolist,
-        "-Donate 5"
+        "-Donate " + this.donate
       ]
 
       this.command = this.command.join(' ')

@@ -5,78 +5,100 @@
   <meta charset="UTF-8">
   <title>Hello Worlds!</title>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js"></script>
-  <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
-  <!--<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
+  <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="main.css">
 </head>
 
 <body>
   <div id="vueapp">
-    <h1>Hello Worlds!</h1>
-    <div class="container">
-      <table>
-        <thead>
-          <tr>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Preferred Currency:</td>
-            <td><input type="text" v-model="prefcurrency"></td>
-          </tr>
-          <tr>
-            <td>Wallet Adress:</td>
-            <td><input type="text" v-model="walletadress"></td>
-          </tr>
-          <tr>
-            <td>Worker Login:</td>
-            <td><input type="text" v-model="workerlogin"></td>
-          </tr>
-          <tr>
-            <td>Worker Name:</td>
-            <td><input type="text" v-model="workername"></td>
-          </tr>
-          <tr>
-            <td>Location</td>
-            <td><input type="text" v-model="location"></td>
-          </tr>
-          <tr>
-            <td>Password</td>
-            <td><input type="text" v-model="password"></td>
-          </tr>
-          <tr>
-            <td>Number of GPU's</td>
-            <td><input type="text" v-model="gpunum"></td>
-          </tr>
-        </tbody>
-        <tr>
-          <td>Poolname</td>
-          <td>
-            <select v-model="poolname">
-              <option disabled value="">
-                Please Select One
-              </option>
-              <option v-for="pool in poolnames">
-                {{ pool }}
-              </option>
-            </select>
-          </td>
-        </tr>
-      </table>
-
-      <div class="container">
-        <div class="row">
-          <div class="col-md-2" v-for="algo in pools[poolname]">
-            <input :name="'algo_' + algo" type="checkbox" v-bind:value="algo" v-model="checkedAlgos">
-            <label :for="'algo_' + algo">{{ algo }}</label>
-          </div>
+    <h1 class="title">Hello Worlds!</h1>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          Preferred Currency:
+        </div>
+        <div class="col">
+          <input type="text" v-model="prefcurrency">
         </div>
       </div>
+      <div class="row">
+        <div class="col">
+          Wallet Adress:
+        </div>
+        <div class="col">
+          <input type="text" v-model="walletadress">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          Worker Login:
+        </div>
+        <div class="col">
+          <input type="text" v-model="workerlogin">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          Worker Name:
+        </div>
+        <div class="col">
+          <input type="text" v-model="workername">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          Location:
+        </div>
+        <div class="col">
+          <input type="text" v-model="location">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          Password:
+        </div>
+        <div class="col">
+          <input type="text" v-model="password">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          Number of GPU's:
+        </div>
+        <div class="col">
+          <input type="text" v-model="gpunum">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          Poolname:
+        </div>
+        <div class="col">
+          <select v-model="poolname">
+            <option disabled value="">
+              Please Select One
+            </option>
+            <option v-for="pool in poolnames">
+              {{ pool }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+        <div class="row">
+          <div class="col-sm-2" v-for="algo in pools[poolname]">
+            <input :name="algo" type="checkbox" v-bind:value="algo" v-model="checkedAlgos">
+            <label :for="algo">{{ algo }}</label>
+          </div>
+        </div>
+
+
 
       <div class="row special">
         <div class="col-sm">
           <a v-if="gpunum > 0 && poolname != '' && checkedAlgos != ''" id="downloadClass" href="">
-            <button v-on:click="downloadBat('start.bat', 'text/plain', poolname)" class="button" href="">Download</button>
+            <button v-on:click="downloadBat('start' + poolname + '.bat', 'text/plain', poolname)" class="button" href="">Download</button>
           </a>
         </div>
       </div>

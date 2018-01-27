@@ -4,33 +4,49 @@ const vueapp = new Vue({
   el: '#vueapp',
   data: {
     walletadress: '3DYWArrdPYoEUzmfdxWGYh1cvdaozZm95q',
+    prefcurrency: 'BTC',
     workerlogin: 'doctororbit',
     workername: 'doctororbit',
-    prefcurrency: 'BTC',
     password: 'x',
-    command: '',
     gpunum: '0',
     gpulist: '',
-    poolnames: [
-      "zpool",
-      "hashrefinery",
-      "miningpoolhub",
-      "nicehash",
-      "hashpool"
-    ],
+    command: '',
     poolname: '',
     location: 'US',
     donate: '5',
     gainpct: '3',
     checkedAlgos: [],
     alglolist: '',
+    poolnames: [
+      "hashpool",
+      "hashrefinery",
+      "miningpoolhub",
+      "zpool",
+      "nicehash"
+    ],
     pools: {
       hashpool: [ "xevan", "hsr", "phi", "tribus", "c11", "lbry", "skein", "sib", "bitcore", "x17", "Nist5", "myr-gro", "Lyra2RE2", "neoscrypt", "blake2s", "skunk" ],
       hashrefinery: [ "skunk", "phi", "xevan", "tribus", "skein", "bitcore", "x17", "Nist5", "Lyra2RE2", "neoscrypt" ],
       miningpoolhub: [ "cryptonight", "keccak", "lyra2z", "skein", "equihash", "groestl", "myr-gro", "Lyra2RE2", "neoscrypt" ],
       zpool: [ "poly", "hsr", "keccak", "xevan", "veltor", "skunk", "tribus", "c11", "x11evo", "lbry", "phi", "skein", "equihash", "groestl", "timetravel", "sib", "bitcore", "x17", "blakecoin", "Nist5", "myr-gro", "Lyra2RE2", "neoscrypt", "blake2s" ],
-      nicehash: [ "cryptonight", "keccak", "skunk", "lbry", "equihash", "Nist5", "Lyra2RE2", "neoscrypt", "blake2s" ]
-    }
+      nicehash: [ "cryp-night", "keccak", "skunk", "lbry", "equihash", "Nist5", "Lyra2RE2", "neoscrypt", "blake2s" ]
+    },
+    inputs: [
+      "walletadress",
+      "prefcurrency",
+      "workerlogin",
+      "workername",
+      "password",
+      "gpunum"
+    ],
+    inputStrings: [
+      "Wallet Adress:",
+      "Preferred Currency:",
+      "Worker Login:",
+      "Worker Name:",
+      "Password:",
+      "Number of GPU's:"
+    ]
   },
   methods: {
     startMining() {
@@ -89,7 +105,7 @@ const vueapp = new Vue({
 
       this.command = [
         "powershell -version 5.0 -noexit -executionpolicy bypass -windowstyle maximized -command",
-        "\"" + __dirname + "\\scripts\\NemosMiner-v2.4.2.ps1",
+        "\"" + __dirname + "\\scripts\\NemosMiner-v2.4.1.ps1",
         "-SelGPUDSTM \'" + this.gpuNumbers.gpus + "'",
         "-SelGPUCC \'" + this.gpuNumbers.gpuc + "'",
         "-Currency USD",

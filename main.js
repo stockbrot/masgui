@@ -1,16 +1,17 @@
 const {app, BrowserWindow} = require('electron')
 
-const electron-reload = require('electron-reload');
 /*
 require('electron-reload')(__dirname, {
   electron: require('electron-prebuilt')
 });
 */
 
+require('electron-reload')(__dirname);
+
 const path = require('path')
 const url = require('url')
 
-// Keep a global reference of the window object, if you don't, the window will
+// Kaeep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
@@ -24,9 +25,6 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }))
-
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

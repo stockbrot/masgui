@@ -12,64 +12,31 @@
 
 <body>
   <div id="vueapp">
-    <h1 class="title">Hello Worlds!</h1>
+    <h1 class="title">Hello Worldss!</h1>
     <div class="container-fluid">
+
+
+      <div class="row" v-for="inp in inputs">
+        <div class="col">
+          {{ inp.name }}
+        </div>
+        <div class="col input-group mb-3">
+          <input type="text" class="form-control" placeholder="{{ inp.value }}" aria-label="{{ inp.value }}" aria-describedby="basic-addon1" v-model="inp.value">
+        </div>
+      </div>
+
       <div class="row">
         <div class="col">
           Preferred Currency:
         </div>
-        <div class="col">
-          <input type="text" v-model="prefcurrency">
+        <div class="col input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">@</span>
+          </div>
+          <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" v-model="prefcurrency">
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          Wallet Adress:
-        </div>
-        <div class="col">
-          <input type="text" v-model="walletadress">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          Worker Login:
-        </div>
-        <div class="col">
-          <input type="text" v-model="workerlogin">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          Worker Name:
-        </div>
-        <div class="col">
-          <input type="text" v-model="workername">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          Location:
-        </div>
-        <div class="col">
-          <input type="text" v-model="location">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          Password:
-        </div>
-        <div class="col">
-          <input type="text" v-model="password">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          Number of GPU's:
-        </div>
-        <div class="col">
-          <input type="text" v-model="gpunum">
-        </div>
-      </div>
+
       <div class="row">
         <div class="col">
           Poolname:
@@ -85,6 +52,8 @@
           </select>
         </div>
       </div>
+
+
 
         <div class="row">
           <div class="col-sm-2" v-for="algo in pools[poolname]">

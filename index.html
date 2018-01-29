@@ -14,14 +14,12 @@
   <div id="vueapp">
     <h1 class="title">Hello Worldss!</h1>
     <div class="container-fluid">
-
-
       <div class="row" v-for="inp in inputs">
         <div class="col">
           {{ inp.name }}
         </div>
         <div class="col input-group mb-3">
-          <input type="text" class="form-control" placeholder="{{ inp.value }}" aria-label="{{ inp.value }}" aria-describedby="basic-addon1" v-model="inp.value">
+          <input type="text" class="form-control" placeholder="inp.value" v-model="inp.value">
         </div>
       </div>
 

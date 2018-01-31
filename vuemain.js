@@ -73,23 +73,20 @@ const vueapp = new Vue({
         })
     },
     startblah() {
-      let ps = new shell({
-        version: '5.0',
-        windowStyle: 'maximized',
-        executionPolicy: 'Bypass',
-        noProfile: true
+      var spawn = require('child_process').spawn,
+        ls = spawn('cmd.exe',["/c", `start.bat`],{env: process.env})
+
+      ls.stdout.on('data', function(data) {
+        console.log('stdout: ' + data)
       })
-      // console.log(this.Algos)
-      ps.addCommand("&.\\scripts\\NemosMiner-v2.4.1.ps1 -SelGPUDSTM '0' -SelGPUCC '0' -Currency USD -Passwordcurrency BTC -interval 30 -Username doctororbit -Workername miningpoolhub -Location Europe -ActiveMinerGainPct 3 -PoolName miningpoolhub -Type nvidia -Algorithm lyra2z,skein,equihash,groestl,MyriadGroestl,Lyra2RE2,neoscrypt,yescrypt -Donate 0")
-      ps.invoke()
-        .then(output => {
-          console.log("hello world")
-          //console.log(output)
-        })
-        .catch(err => {
-          console.log(err)
-          ps.dispose()
-        })
+
+      ls.stderr.on('data', function(data) {
+        console.log('stderr: ' + data)
+      })
+
+      ls.on('exit', function(code) {
+        console.log('child process exited with code ' + code)
+      })
     },
     downloadBat(name, type, pool) {
       this.poolname = pool

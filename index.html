@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Hello Worlds!</title>
+  <title>MasGUI</title>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -12,35 +12,26 @@
 
 <body>
   <div id="vueapp">
-    <h1 class="title">Hello Worldss!</h1>
+    <h1 class="title">MasGUI</h1>
     <div class="container-fluid">
 
-      <button v-on:click="startblah" type="button" class="btn btn-primary btn-block">Start Mining</button>
+      <button v-if="inputs.gpunum.value > 0 && poolname != '' && checkedAlgos != ''" v-on:click="startblah" type="button" class="btn btn-primary btn-block">Start Mining</button>
     <br>
     <template v-for="inp in inputs">
       <div class="row">
         <div class="col">
           {{ inp.name }}
         </div>
-        <div class="col input-group mb-3">
-          <input type="text" class="form-control" v-bind:placeholder="inp.value" v-model="inp.value">
+        <div class="col input-group mb-3 input-wrapper">
+          <input type="text" class="form-control" v-bind:placeholder="inp.value" v-model="inp.value"/>
         </div>
       </div>
     </template>
 
       <div class="row">
-        <div class="col">
-          Preferred Currency:
-        </div>
-        <div class="col input-group mb-3">
-          <input type="text" class="form-control" placeholder="BTC" v-model="inputs.prefcurrency.value">
-        </div>
-      </div>
-
-      <div class="row">
         <div class="col-sm-2 checkbox" v-for="algo in pools[poolname]">
           <label class="checkbox-inline">
-            <input :name="algo" type="checkbox" v-bind:value="algo" v-model="checkedAlgos"> {{ algo }}
+              <input :name="algo" type="checkbox" v-bind:value="algo" v-model="checkedAlgos"> {{ algo }}
           </label>
         </div>
       </div>
@@ -60,7 +51,7 @@
         </select>
         </div>
       </div>
-
+      <!--
       <div class="row special">
         <div class="col-sm">
           <a v-if="inputs.gpunum.value > 0 && poolname != '' && checkedAlgos != ''" id="downloadClass" href="">
@@ -68,18 +59,13 @@
           </a>
         </div>
       </div>
+      -->
     </div>
   </div>
 
   <script>
-    // You can also require other files to run in this process
     require('./vuemain.js')
   </script>
-  <!--
-  <pre>
-    {{ inputs | json }}
-  </pre>
--->
 </body>
 
 </html>

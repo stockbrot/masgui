@@ -1,23 +1,23 @@
 {
-  "name": "electron-quick-start",
-  "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "name": "masgui",
+  "version": "0.9.0",
+  "description": "Multi Algorithm Switching GUI",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/stockbrot/masgui",
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "masgui",
+    "crypto",
+    "mining",
+    "algorithm",
+    "doctororbit"
   ],
-  "author": "GitHub",
+  "author": "DoctorORBiT",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "*",
+    "electron": "^1.7.11",
     "electron-builder": "^19.55.2",
     "electron-prebuilt": "^1.4.13",
     "electron-reload": "^1.2.2"

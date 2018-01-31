@@ -5,9 +5,6 @@ const vueapp = new Vue({
     gpulist: '',
     command: '',
     poolname: '',
-    location: 'US',
-    donate: '5',
-    gainpct: '3',
     checkedAlgos: [],
     alglolist: '',
     poolnames: [
@@ -27,11 +24,11 @@ const vueapp = new Vue({
     inputs: {
       walletadress: {
         name: "Wallet Adress:",
-        value: "3DYWArrdPYoEUzmfdxWGYh1cvdaozZm95q"
+        value: "D6VmxuuEDDxY2uSkMLUVS4GGXTEP8Xwnxu"
       },
-      prefcurrency: {
-        name: "Preferred Currency:",
-        value: "BTC"
+      walletcoin: {
+        name: "Wallet Coin:",
+        value: "DGB"
       },
       workerlogin: {
         name: "Worker Login:",
@@ -47,7 +44,23 @@ const vueapp = new Vue({
       },
       gpunum: {
         name: "Number of GPU\'s:",
-        value: "0"
+        value: "1"
+      },
+      gainpct: {
+        name: "Switch Algorithm on X% change:",
+        value: "3"
+      },
+      donate: {
+        name: "Donate X minutes per Day:",
+        value: "5"
+      },
+      currency: {
+        name: "Preferred Currency (i.e. USD/Day, EUR/Day etc.):",
+        value: "USD"
+      },
+      location: {
+        name: "Location:",
+        value: "US"
       }
     }
   },
@@ -98,33 +111,26 @@ const vueapp = new Vue({
     Algos() {
       this.algolist = this.checkedAlgos.join()
 
-      String.prototype.format = function() {
-        var newStr = this
-        i = 0
-        while (/%s/.test(newStr)) {
-          newStr = newStr.replace("%s", arguments[i++])
-        }
-        return newStr
+      if (this.poolname.toLowerCase() == 'zpool') {
+        this.inputs.location.value = 'US'
       }
 
       this.command = [
         "powershell -version 5.0 -noexit -executionpolicy bypass -windowstyle maximized -command",
-        // "\"" + __dirname + "\\scripts\\NemosMiner-v2.4.1.ps1",
         __dirname + "\\scripts\\NemosMiner-v2.4.1.ps1",
         "-SelGPUDSTM \'" + this.gpuNumbers.gpus + "'",
         "-SelGPUCC \'" + this.gpuNumbers.gpuc + "'",
-        "-Currency USD",
-        "-Passwordcurrency " + this.inputs.prefcurrency.value,
+        "-Currency " + this.inputs.currency.value,
+        "-Passwordcurrency " + this.inputs.walletcoin.value,
         "-Interval 30",
         "-Wallet " + this.inputs.walletadress.value,
-        "-Location " + this.location,
-        "-ActiveMinerGainPct " + this.gainpct,
+        "-Location " + this.inputs.location.value,
+        "-ActiveMinerGainPct " + this.inputs.gainpct.value,
         "-PoolName " + this.poolname.toLowerCase(),
         "-WorkerName " + this.inputs.workername.value,
         "-Type nvidia",
         "-Algorithm " + this.algolist,
-        "-Donate " + this.donate
-        //"-Donate " + this.donate + "\""
+        "-Donate " + this.inputs.donate.value
       ]
 
       this.command = this.command.join(' ')
@@ -133,10 +139,3 @@ const vueapp = new Vue({
     }
   }
 })
-
-
-
-//TODO: Execute command
-
-/*
- */

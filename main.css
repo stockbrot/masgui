@@ -1,6 +1,10 @@
 body {
-  padding: 50px;
+  padding: 0px;
   display: block;
+}
+
+.jumbotron {
+  margin: 3rem;
 }
 
 .button {
@@ -8,14 +12,81 @@ body {
 }
 
 .row {
-  padding: 1rem 1em !important; 
+  padding: 1rem 1em !important;
 }
-
 
 .special {
   margin-bottom: 0px;
 }
 
-#vueapp {
+    /*
+    *      Title Bar
+    */
 
+
+.title-bar {
+  -webkit-app-region: drag;
+  height: 32px;
+  padding: none !important;
+  margin: 0px !important;
+}
+
+.title-bar-title {
+  position: fixed;
+  height: 32px;
+  width: 100%;
+  padding-top: 5px;
+  background-color: #3f3f41;
+  background-attachment: fixed;
+  color: #f1f1f1;
+}
+
+.title-bar-title a {
+  padding-left: 20px;
+}
+
+.title-bar-btns {
+  -webkit-app-region: no-drag;
+  position: fixed;
+  top: 0px;
+  right: 6px;
+}
+
+.title-bar-btns button {
+  height: 32px;
+  width: 32px;
+  background-color: transparent;
+  border: none;
+  color: #F1F1F1;
+  font-size: 16px;
+  z-index: 1;
+}
+
+.title-bar-btns button:hover {
+  background-color: #616165;
+}
+
+    /*
+    *    Scrollbar
+    */
+
+.scrollbar {
+  overflow-y: scroll;
+}
+
+.force-overflow {
+  min-height: 450px;
+}
+
+#style-8::-webkit-scrollbar-track {
+  background-color: #222;
+}
+
+#style-8::-webkit-scrollbar {
+  width: 10px;
+  background-color: #F5F5F5;
+}
+
+#style-8::-webkit-scrollbar-thumb {
+  background-color: #3f3f41;
 }

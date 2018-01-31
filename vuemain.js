@@ -1,4 +1,3 @@
-
 const vueapp = new Vue({
   el: '#vueapp',
   data: {
@@ -67,7 +66,7 @@ const vueapp = new Vue({
   methods: {
     startblah() {
       var spawn = require('child_process').spawn,
-        ls = spawn('cmd.exe',["/c", this.Algos],{
+        ls = spawn('cmd.exe', ["/c", this.Algos], {
           env: process.env,
           detached: true
         })
@@ -92,50 +91,50 @@ const vueapp = new Vue({
       a.href = URL.createObjectURL(file)
       a.download = name
     }
-  },
-  computed: {
-    gpuNumbers() {
-      let gpulist = {
-        gpuc: '',
-        gpus: ''
-      }
-      for (i=0;i<this.inputs.gpunum.value.length;i++) {
-        gpulist.gpuc += i + ','
-        gpulist.gpus += i + ' '
-      }
-      gpulist.gpuc = gpulist.gpuc.substring(0, gpulist.gpuc.length - 1)
-      gpulist.gpus = gpulist.gpus.substring(0, gpulist.gpus.length - 1)
-      return gpulist
-    },
-
-    Algos() {
-      this.algolist = this.checkedAlgos.join()
-
-      if (this.poolname.toLowerCase() == 'zpool') {
-        this.inputs.location.value[0] = 'US'
-      }
-
-      this.command = [
-        "powershell -version 5.0 -noexit -executionpolicy bypass -windowstyle maximized -command",
-        __dirname + "\\scripts\\NemosMiner-v2.4.1.ps1",
-        "-SelGPUDSTM \'" + this.gpuNumbers.gpus + "'",
-        "-SelGPUCC \'" + this.gpuNumbers.gpuc + "'",
-        "-Currency " + this.inputs.currency.value[0],
-        "-Passwordcurrency " + this.inputs.walletcoin.value[0],
-        "-Interval 30",
-        "-Wallet " + this.inputs.walletadress.value[0],
-        "-Location " + this.inputs.location.value[0],
-        "-ActiveMinerGainPct " + this.inputs.gainpct.value[0],
-        "-PoolName " + this.poolname.toLowerCase(),
-        "-WorkerName " + this.inputs.workername.value[0],
-        "-Type nvidia",
-        "-Algorithm " + this.algolist,
-        "-Donate " + this.inputs.donate.value[0]
-      ]
-
-      this.command = this.command.join(' ')
-
-      return this.command
+},
+computed: {
+  gpuNumbers() {
+    let gpulist = {
+      gpuc: '',
+      gpus: ''
     }
+    for (i = 0; i < this.inputs.gpunum.value.length; i++) {
+      gpulist.gpuc += i + ','
+      gpulist.gpus += i + ' '
+    }
+    gpulist.gpuc = gpulist.gpuc.substring(0, gpulist.gpuc.length - 1)
+    gpulist.gpus = gpulist.gpus.substring(0, gpulist.gpus.length - 1)
+    return gpulist
+  },
+
+  Algos() {
+    this.algolist = this.checkedAlgos.join()
+
+    if (this.poolname.toLowerCase() == 'zpool') {
+      this.inputs.location.value[0] = 'US'
+    }
+
+    this.command = [
+      "powershell -version 5.0 -noexit -executionpolicy bypass -windowstyle maximized -command",
+      __dirname + "\\scripts\\NemosMiner-v2.4.1.ps1",
+      "-SelGPUDSTM \'" + this.gpuNumbers.gpus + "'",
+      "-SelGPUCC \'" + this.gpuNumbers.gpuc + "'",
+      "-Currency " + this.inputs.currency.value[0],
+      "-Passwordcurrency " + this.inputs.walletcoin.value[0],
+      "-Interval 30",
+      "-Wallet " + this.inputs.walletadress.value[0],
+      "-Location " + this.inputs.location.value[0],
+      "-ActiveMinerGainPct " + this.inputs.gainpct.value[0],
+      "-PoolName " + this.poolname.toLowerCase(),
+      "-WorkerName " + this.inputs.workername.value[0],
+      "-Type nvidia",
+      "-Algorithm " + this.algolist,
+      "-Donate " + this.inputs.donate.value[0]
+    ]
+
+    this.command = this.command.join(' ')
+
+    return this.command
   }
+}
 })

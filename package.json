@@ -1,11 +1,14 @@
 {
   "name": "masgui",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Multi Algorithm Switching GUI",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
+  "postinstall": "electron-builder install-app-deps",
   "repository": "https://github.com/stockbrot/masgui",
   "keywords": [
     "masgui",
@@ -18,9 +21,11 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^1.7.11",
-    "electron-builder": "^19.55.2",
     "electron-prebuilt": "^1.4.13",
-    "electron-reload": "^1.2.2"
+    "electron-reload": "^1.2.2",
+    "electron-builder": "^19.55.3"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "optionalDependencies": {
+  }
 }

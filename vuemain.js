@@ -34,15 +34,15 @@ const vueapp = new Vue({
         name: "Preferred Currency:",
         value: "BTC"
       },
-        workerlogin: {
+      workerlogin: {
         name: "Worker Login:",
         value: "doctororbit"
       },
-        workername: {
+      workername: {
         name: "Worker Name:",
         value: "doctororbit"
       },
-        password: {
+      password: {
         name: "Password:",
         value: "x"
       },
@@ -80,7 +80,7 @@ const vueapp = new Vue({
         noProfile: true
       })
       // console.log(this.Algos)
-      ps.addCommand("\"C:\\Users\\Tanis\\Desktop\\Projects\\masgui\\scripts\\NemosMiner-v2.4.1.ps1 -SelGPUDSTM '0' -SelGPUCC '0' -Currency USD -Passwordcurrency BTC -Interval 30 -Wallet 3DYWArrdPYoEUzmfdxWGYh1cvdaozZm95q -Location US -ActiveMinerGainPct 3 -PoolName hashrefinery -WorkerName doctororbit -Type nvidia -Algorithm Lyra2RE2 -Donate 5\"")
+      ps.addCommand("&.\\scripts\\NemosMiner-v2.4.1.ps1 -SelGPUDSTM '0' -SelGPUCC '0' -Currency USD -Passwordcurrency BTC -interval 30 -Username doctororbit -Workername miningpoolhub -Location Europe -ActiveMinerGainPct 3 -PoolName miningpoolhub -Type nvidia -Algorithm lyra2z,skein,equihash,groestl,MyriadGroestl,Lyra2RE2,neoscrypt,yescrypt -Donate 0")
       ps.invoke()
         .then(output => {
           console.log("hello world")
@@ -131,7 +131,7 @@ const vueapp = new Vue({
       this.command = [
         // "powershell -version 5.0 -noexit -executionpolicy bypass -windowstyle maximized -command",
         // "\"" + __dirname + "\\scripts\\NemosMiner-v2.4.1.ps1",
-        __dirname + "\\scripts\\NemosMiner-v2.4.1.ps1",
+        // __dirname + "\\scripts\\NemosMiner-v2.4.1.ps1",
         "-SelGPUDSTM \'" + this.gpuNumbers.gpus + "'",
         "-SelGPUCC \'" + this.gpuNumbers.gpuc + "'",
         "-Currency USD",
@@ -148,7 +148,7 @@ const vueapp = new Vue({
         //"-Donate " + this.donate + "\""
       ]
 
-      this.command = this.command.join(' ')
+      // this.command = this.command.join(' ')
 
       return this.command
     }

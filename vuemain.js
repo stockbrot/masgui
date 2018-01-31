@@ -1,4 +1,3 @@
-const shell = require('node-powershell')
 
 const vueapp = new Vue({
   el: '#vueapp',
@@ -53,28 +52,12 @@ const vueapp = new Vue({
     }
   },
   methods: {
-    startMining() {
-      let ps = new shell({
-        version: '5.0',
-        windowStyle: 'maximized',
-        executionPolicy: 'Bypass',
-        noProfile: true
-      })
-      // console.log(this.Algos)
-      ps.addCommand(this.Algos)
-      ps.invoke()
-        .then(output => {
-          console.log("success")
-          //console.log(output)
-        })
-        .catch(err => {
-          console.log(err)
-          ps.dispose()
-        })
-    },
     startblah() {
-      var spawn = require('child_process').execFile,
-        ls = spawn('cmd.exe',["/c", `start.bat`],{env: process.env})
+      var spawn = require('child_process').spawn,
+        ls = spawn('cmd.exe',["/c", this.Algos],{
+          env: process.env,
+          detached: true
+        })
 
       ls.stdout.on('data', function(data) {
         console.log('stdout: ' + data)
@@ -103,7 +86,7 @@ const vueapp = new Vue({
         gpuc: '',
         gpus: ''
       }
-      for (var i in this.inputs.gpunum.value) {
+      for (i=0;i<this.inputs.gpunum.value.length;i++) {
         gpulist.gpuc += i + ','
         gpulist.gpus += i + ' '
       }

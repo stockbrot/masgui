@@ -1,14 +1,8 @@
-const shell = require('node-powershell');
+const shell = require('node-powershell')
 
 const vueapp = new Vue({
   el: '#vueapp',
   data: {
-    walletadress: '3DYWArrdPYoEUzmfdxWGYh1cvdaozZm95q',
-    prefcurrency: 'BTC',
-    workerlogin: 'doctororbit',
-    workername: 'doctororbit',
-    password: 'x',
-    gpunum: '0',
     gpulist: '',
     command: '',
     poolname: '',
@@ -27,35 +21,36 @@ const vueapp = new Vue({
     pools: {
       hashpool: ["xevan", "hsr", "phi", "tribus", "c11", "lbry", "skein", "sib", "bitcore", "x17", "Nist5", "myr-gro", "Lyra2RE2", "neoscrypt", "blake2s", "skunk"],
       hashrefinery: ["skunk", "phi", "xevan", "tribus", "skein", "bitcore", "x17", "Nist5", "Lyra2RE2", "neoscrypt"],
-      miningpoolhub: ["cryptonight", "keccak", "lyra2z", "skein", "equihash", "groestl", "myr-gro", "Lyra2RE2", "neoscrypt"],
+      miningpoolhub: ["cryp-night", "keccak", "lyra2z", "skein", "equihash", "groestl", "myr-gro", "Lyra2RE2", "neoscrypt"],
       zpool: ["poly", "hsr", "keccak", "xevan", "veltor", "skunk", "tribus", "c11", "x11evo", "lbry", "phi", "skein", "equihash", "groestl", "timetravel", "sib", "bitcore", "x17", "blakecoin", "Nist5", "myr-gro", "Lyra2RE2", "neoscrypt", "blake2s"],
       nicehash: ["cryp-night", "keccak", "skunk", "lbry", "equihash", "Nist5", "Lyra2RE2", "neoscrypt", "blake2s"]
     },
-    inputs: [{
+    inputs: {
+      walletadress: {
         name: "Wallet Adress:",
-        value: "walletadress"
+        value: "3DYWArrdPYoEUzmfdxWGYh1cvdaozZm95q"
       },
-      {
+      prefcurrency: {
         name: "Preferred Currency:",
-        value: "prefcurrency"
+        value: "BTC"
       },
-      {
+        workerlogin: {
         name: "Worker Login:",
-        value: "workerlogin"
+        value: "doctororbit"
       },
-      {
+        workername: {
         name: "Worker Name:",
-        value: "workername"
+        value: "doctororbit"
       },
-      {
+        password: {
         name: "Password:",
-        value: "password"
+        value: "x"
       },
-      {
+      gpunum: {
         name: "Number of GPU\'s:",
-        value: "gpunum"
+        value: "0"
       }
-    ]
+    }
   },
   methods: {
     startMining() {
@@ -63,28 +58,47 @@ const vueapp = new Vue({
         version: '5.0',
         windowStyle: 'maximized',
         executionPolicy: 'Bypass',
-        noProfile: true,
-        inputFormat: 'text'
-      });
+        noProfile: true
+      })
       // console.log(this.Algos)
-      ps.addCommand(this.Algos) 
+      ps.addCommand(this.Algos)
       ps.invoke()
         .then(output => {
-          console.log(output);
+          console.log("success")
+          //console.log(output)
         })
         .catch(err => {
-          console.log(err);
-          ps.dispose();
-        });
+          console.log(err)
+          ps.dispose()
+        })
+    },
+    startblah() {
+      let ps = new shell({
+        version: '5.0',
+        windowStyle: 'maximized',
+        executionPolicy: 'Bypass',
+        noProfile: true
+      })
+      // console.log(this.Algos)
+      ps.addCommand("\"C:\\Users\\Tanis\\Desktop\\Projects\\masgui\\scripts\\NemosMiner-v2.4.1.ps1 -SelGPUDSTM '0' -SelGPUCC '0' -Currency USD -Passwordcurrency BTC -Interval 30 -Wallet 3DYWArrdPYoEUzmfdxWGYh1cvdaozZm95q -Location US -ActiveMinerGainPct 3 -PoolName hashrefinery -WorkerName doctororbit -Type nvidia -Algorithm Lyra2RE2 -Donate 5\"")
+      ps.invoke()
+        .then(output => {
+          console.log("hello world")
+          //console.log(output)
+        })
+        .catch(err => {
+          console.log(err)
+          ps.dispose()
+        })
     },
     downloadBat(name, type, pool) {
-      this.poolname = pool;
-      let a = document.getElementById("downloadClass");
+      this.poolname = pool
+      let a = document.getElementById("downloadClass")
       let file = new Blob([this.Algos], {
         type: type
-      });
-      a.href = URL.createObjectURL(file);
-      a.download = name;
+      })
+      a.href = URL.createObjectURL(file)
+      a.download = name
     }
   },
   computed: {
@@ -93,7 +107,7 @@ const vueapp = new Vue({
         gpuc: '',
         gpus: ''
       }
-      for (var i = 0; i < this.gpunum; i++) {
+      for (var i in this.inputs.gpunum.value) {
         gpulist.gpuc += i + ','
         gpulist.gpus += i + ' '
       }
@@ -115,21 +129,23 @@ const vueapp = new Vue({
       }
 
       this.command = [
-        "powershell -version 5.0 -noexit -executionpolicy bypass -windowstyle maximized -command",
-        "\"" + __dirname + "\\scripts\\NemosMiner-v2.4.1.ps1",
+        // "powershell -version 5.0 -noexit -executionpolicy bypass -windowstyle maximized -command",
+        // "\"" + __dirname + "\\scripts\\NemosMiner-v2.4.1.ps1",
+        __dirname + "\\scripts\\NemosMiner-v2.4.1.ps1",
         "-SelGPUDSTM \'" + this.gpuNumbers.gpus + "'",
         "-SelGPUCC \'" + this.gpuNumbers.gpuc + "'",
         "-Currency USD",
-        "-Passwordcurrency " + this.prefcurrency,
+        "-Passwordcurrency " + this.inputs.prefcurrency.value,
         "-Interval 30",
-        "-Wallet " + this.walletadress,
+        "-Wallet " + this.inputs.walletadress.value,
         "-Location " + this.location,
         "-ActiveMinerGainPct " + this.gainpct,
         "-PoolName " + this.poolname.toLowerCase(),
-        "-WorkerName " + this.workername,
+        "-WorkerName " + this.inputs.workername.value,
         "-Type nvidia",
         "-Algorithm " + this.algolist,
-        "-Donate " + this.donate + "\""
+        "-Donate " + this.donate
+        //"-Donate " + this.donate + "\""
       ]
 
       this.command = this.command.join(' ')
@@ -137,7 +153,7 @@ const vueapp = new Vue({
       return this.command
     }
   }
-});
+})
 
 
 

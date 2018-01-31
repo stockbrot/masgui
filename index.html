@@ -14,24 +14,34 @@
   <div id="vueapp">
     <h1 class="title">Hello Worldss!</h1>
     <div class="container-fluid">
-      <div class="row" v-for="inp in inputs">
+    <template v-for="inp in inputs">
+      <div class="row">
         <div class="col">
           {{ inp.name }}
         </div>
         <div class="col input-group mb-3">
-          <input type="text" class="form-control" placeholder="inp.value" v-model="inp.value">
+          <input type="text" class="form-control" v-bind:placeholder="inp.value" v-model="inp.value">
         </div>
       </div>
+    </template>
 
       <div class="row">
         <div class="col">
           Preferred Currency:
         </div>
         <div class="col input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">@</span>
-          </div>
-          <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" v-model="prefcurrency">
+          <input type="text" class="form-control" placeholder="BTC" v-model="inputs.prefcurrency.value">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-2 checkbox" v-for="algo in pools[poolname]">
+          <label class="checkbox-inline">
+            <input :name="algo" type="checkbox" v-bind:value="algo" v-model="checkedAlgos"> {{ algo }}
+          </label>
+          <!-- <label :for="algo">{{ algo }}</label>
+          <input type="checkbox"> Check me out
+        -->
         </div>
       </div>
 
@@ -40,33 +50,27 @@
           Poolname:
         </div>
         <div class="col">
-          <select v-model="poolname">
-            <option disabled value="">
-              Please Select One
-            </option>
-            <option v-for="pool in poolnames">
-              {{ pool }}
-            </option>
-          </select>
+          <select class="form-control" v-model="poolname">
+          <option disabled value="">
+            Please Select One
+          </option>
+          <option v-for="pool in poolnames">
+            {{ pool }}
+          </option>
+        </select>
         </div>
       </div>
 
 
 
-        <div class="row">
-          <div class="col-sm-2" v-for="algo in pools[poolname]">
-            <input :name="algo" type="checkbox" v-bind:value="algo" v-model="checkedAlgos">
-            <label :for="algo">{{ algo }}</label>
-          </div>
-        </div>
 
 
 
       <div class="row special">
         <div class="col-sm">
-          <a v-if="gpunum > 0 && poolname != '' && checkedAlgos != ''" id="downloadClass" href="">
-            <button v-on:click="downloadBat('start' + poolname + '.bat', 'text/plain', poolname)" class="button" href="">Download</button>
-          </a>
+          <!-- <a v-if="inputs.gpunum.value > 0 && poolname != '' && checkedAlgos != ''" id="downloadClass" href=""> -->
+            <!-- <button v-on:click="downloadBat('start' + poolname + '.bat', 'text/plain', poolname)" class="button" href="">Download</button> -->
+            <button v-on:click="startblah" class="button">Download</button>
         </div>
       </div>
     </div>
@@ -76,6 +80,11 @@
     // You can also require other files to run in this process
     require('./vuemain.js')
   </script>
+  <!--
+  <pre>
+    {{ inputs | json }}
+  </pre>
+-->
 </body>
 
 </html>

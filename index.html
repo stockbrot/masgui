@@ -16,17 +16,18 @@
     <div class="container-fluid">
 
       <button v-if="inputs.gpunum.value > 0 && poolname != '' && checkedAlgos != ''" v-on:click="startblah" type="button" class="btn btn-primary btn-block">Start Mining</button>
-    <br>
-    <template v-for="inp in inputs">
-      <div class="row">
-        <div class="col">
-          {{ inp.name }}
+      <br>
+
+      <template v-for="inp in inputs">
+        <div class="row">
+          <div class="col">
+            {{ inp.name }}
+          </div>
+          <div class="col input-group mb-3 input-wrapper">
+            <input type="text" class="form-control" v-bind:placeholder="inp.value" v-model="inp.value"/>
+          </div>
         </div>
-        <div class="col input-group mb-3 input-wrapper">
-          <input type="text" class="form-control" v-bind:placeholder="inp.value" v-model="inp.value"/>
-        </div>
-      </div>
-    </template>
+      </template>
 
       <div class="row">
         <div class="col-sm-2 checkbox" v-for="algo in pools[poolname]">
@@ -42,24 +43,15 @@
         </div>
         <div class="col">
           <select class="form-control" v-model="poolname">
-          <option disabled value="">
-            Please Select One
-          </option>
-          <option v-for="pool in poolnames">
-            {{ pool }}
-          </option>
-        </select>
+            <option disabled value="">
+              Please Select One
+            </option>
+            <option v-for="pool in poolnames">
+              {{ pool }}
+            </option>
+          </select>
         </div>
       </div>
-      <!--
-      <div class="row special">
-        <div class="col-sm">
-          <a v-if="inputs.gpunum.value > 0 && poolname != '' && checkedAlgos != ''" id="downloadClass" href="">
-            <button v-on:click="downloadBat('start.bat', 'text/plain')" type="button" class="btn btn-default btn-block">Download</button>
-          </a>
-        </div>
-      </div>
-      -->
     </div>
   </div>
 
@@ -67,5 +59,15 @@
     require('./vuemain.js')
   </script>
 </body>
+
+<!--
+  <div class="row special">
+    <div class="col-sm">
+      <a v-if="inputs.gpunum.value > 0 && poolname != '' && checkedAlgos != ''" id="downloadClass" href="">
+        <button v-on:click="downloadBat('start.bat', 'text/plain')" type="button" class="btn btn-default btn-block">Download</button>
+      </a>
+    </div>
+  </div>
+-->
 
 </html>

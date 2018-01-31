@@ -24,43 +24,43 @@ const vueapp = new Vue({
     inputs: {
       walletadress: {
         name: "Wallet Adress:",
-        value: "D6VmxuuEDDxY2uSkMLUVS4GGXTEP8Xwnxu"
+        value: ["D6VmxuuEDDxY2uSkMLUVS4GGXTEP8Xwnxu", ""]
       },
       walletcoin: {
         name: "Wallet Coin:",
-        value: "DGB"
+        value: ["DGB", "Hilfe Text2"]
       },
       workerlogin: {
         name: "Worker Login:",
-        value: "doctororbit"
+        value: ["doctororbit", "Hilfe Text3"]
       },
       workername: {
         name: "Worker Name:",
-        value: "doctororbit"
+        value: ["doctororbit", "Hilfe Text4"]
       },
       password: {
         name: "Password:",
-        value: "x"
+        value: ["x", "Hilfe Text5"]
       },
       gpunum: {
         name: "Number of GPU\'s:",
-        value: "1"
+        value: ["1", "Hilfe Text6"]
       },
       gainpct: {
         name: "Switch Algorithm on X% change:",
-        value: "3"
+        value: ["3", "Hilfe Text"]
       },
       donate: {
         name: "Donate X minutes per Day:",
-        value: "5"
+        value: ["5", "Hilfe Text"]
       },
       currency: {
         name: "Preferred Currency (i.e. USD/Day, EUR/Day etc.):",
-        value: "USD"
+        value: ["USD", "Hilfe Text"]
       },
       location: {
         name: "Location:",
-        value: "US"
+        value: ["US", "Hilfe Text"]
       }
     }
   },
@@ -112,7 +112,7 @@ const vueapp = new Vue({
       this.algolist = this.checkedAlgos.join()
 
       if (this.poolname.toLowerCase() == 'zpool') {
-        this.inputs.location.value = 'US'
+        this.inputs.location.value[0] = 'US'
       }
 
       this.command = [
@@ -120,17 +120,17 @@ const vueapp = new Vue({
         __dirname + "\\scripts\\NemosMiner-v2.4.1.ps1",
         "-SelGPUDSTM \'" + this.gpuNumbers.gpus + "'",
         "-SelGPUCC \'" + this.gpuNumbers.gpuc + "'",
-        "-Currency " + this.inputs.currency.value,
-        "-Passwordcurrency " + this.inputs.walletcoin.value,
+        "-Currency " + this.inputs.currency.value[0],
+        "-Passwordcurrency " + this.inputs.walletcoin.value[0],
         "-Interval 30",
-        "-Wallet " + this.inputs.walletadress.value,
-        "-Location " + this.inputs.location.value,
-        "-ActiveMinerGainPct " + this.inputs.gainpct.value,
+        "-Wallet " + this.inputs.walletadress.value[0],
+        "-Location " + this.inputs.location.value[0],
+        "-ActiveMinerGainPct " + this.inputs.gainpct.value[0],
         "-PoolName " + this.poolname.toLowerCase(),
-        "-WorkerName " + this.inputs.workername.value,
+        "-WorkerName " + this.inputs.workername.value[0],
         "-Type nvidia",
         "-Algorithm " + this.algolist,
-        "-Donate " + this.inputs.donate.value
+        "-Donate " + this.inputs.donate.value[0]
       ]
 
       this.command = this.command.join(' ')

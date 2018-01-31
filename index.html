@@ -7,43 +7,78 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
+  <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
   <link rel="stylesheet" href="main.css">
 </head>
 
 <body>
   <div id="vueapp">
-    <h1 class="title">MasGUI</h1>
     <div class="container-fluid">
+      <div class="jumbotron">
 
-      <button v-if="inputs.gpunum.value > 0 && poolname != '' && checkedAlgos != ''" v-on:click="startblah" type="button" class="btn btn-primary btn-block">Start Mining</button>
-      <br>
+        <h1 class="title">MasGUI</h1>
 
-      <template v-for="inp in inputs">
+
+
+
+        <!-- OLD
+        <template v-for="inp in inputs">
+          <div class="row">
+            <div class="col col-lg-3">
+              {{ inp.name }}
+            </div>
+            <div class="col col-lg-3 input-group mb-3">
+              <input type="text" class="form-control" v-bind:placeholder="inp.value" v-model="inp.value"/>
+            </div>
+          </div>
+        </template>
+        -->
+
+        <!-- Inputs -->
+        <template v-for="inp in inputs">
+          <div class="form-group">
+            <label :for="inp.value[0]">{{ inp.name }}</label>
+            <input type="text" class="form-control" aria-describedby="inp.value[0]" :placeholder="inp.value[0]" v-model="inp.value[0]">
+            <small id="inp.value[0]" class="form-text text-muted">{{ inp.value[1] }}</small>
+          </div>
+        </template>
+
+        <!-- Algorithm Checkbox -->
+        <div class="form-group row">
+          <template v-for="algo in pools[poolname]">
+              <div class="custom-control custom-checkbox col col-md-3">
+                  <input class="custom-control-input" :id="algo" :name="algo" type="checkbox" v-bind:value="algo" v-model="checkedAlgos">
+                  <label class="custom-control-label" :for="algo">{{ algo }}</label>
+              </div>
+          </template>
+        </div>
+
+        <!-- Select -->
+        <div class="form-group">
+          <label :for="poolname">Pool:</label>
+          <div class="form-control">
+            <select class="custom-select" v-model="poolname" aria-describedby="poolname">
+              <option disabled value="">
+                Please Select One
+              </option>
+              <option v-for="pool in poolnames">
+                {{ pool }}
+              </option>
+            </select>
+            <small id="poolname" class="form-text text-muted">Hier könnten sachen basierend auf den pool stehen.</small>
+          </div>
+        </div>
+
+        <button v-if="inputs.gpunum.value[0] > 0 && poolname != '' && checkedAlgos != ''" v-on:click="startblah" type="button" class="btn btn-primary btn-block">Start Mining</button>
+        <br>
+
+        <!-- Select
         <div class="row">
           <div class="col">
-            {{ inp.name }}
+            Poolname:
           </div>
-          <div class="col input-group mb-3 input-wrapper">
-            <input type="text" class="form-control" v-bind:placeholder="inp.value" v-model="inp.value"/>
-          </div>
-        </div>
-      </template>
-
-      <div class="row">
-        <div class="col-sm-2 checkbox" v-for="algo in pools[poolname]">
-          <label class="checkbox-inline">
-              <input :name="algo" type="checkbox" v-bind:value="algo" v-model="checkedAlgos"> {{ algo }}
-          </label>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
-          Poolname:
-        </div>
-        <div class="col">
-          <select class="form-control" v-model="poolname">
+          <div class="col">
+            <select class="custom-select" v-model="poolname">
             <option disabled value="">
               Please Select One
             </option>
@@ -51,7 +86,10 @@
               {{ pool }}
             </option>
           </select>
+          </div>
         </div>
+      -->
+
       </div>
     </div>
   </div>

@@ -73,7 +73,7 @@ const vueapp = new Vue({
         })
     },
     startblah() {
-      var spawn = require('child_process').spawn,
+      var spawn = require('child_process').execFile,
         ls = spawn('cmd.exe',["/c", `start.bat`],{env: process.env})
 
       ls.stdout.on('data', function(data) {
@@ -88,8 +88,7 @@ const vueapp = new Vue({
         console.log('child process exited with code ' + code)
       })
     },
-    downloadBat(name, type, pool) {
-      this.poolname = pool
+    downloadBat(name, type) {
       let a = document.getElementById("downloadClass")
       let file = new Blob([this.Algos], {
         type: type
@@ -126,9 +125,9 @@ const vueapp = new Vue({
       }
 
       this.command = [
-        // "powershell -version 5.0 -noexit -executionpolicy bypass -windowstyle maximized -command",
+        "powershell -version 5.0 -noexit -executionpolicy bypass -windowstyle maximized -command",
         // "\"" + __dirname + "\\scripts\\NemosMiner-v2.4.1.ps1",
-        // __dirname + "\\scripts\\NemosMiner-v2.4.1.ps1",
+        __dirname + "\\scripts\\NemosMiner-v2.4.1.ps1",
         "-SelGPUDSTM \'" + this.gpuNumbers.gpus + "'",
         "-SelGPUCC \'" + this.gpuNumbers.gpuc + "'",
         "-Currency USD",
@@ -145,7 +144,7 @@ const vueapp = new Vue({
         //"-Donate " + this.donate + "\""
       ]
 
-      // this.command = this.command.join(' ')
+      this.command = this.command.join(' ')
 
       return this.command
     }

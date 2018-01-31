@@ -14,6 +14,9 @@
   <div id="vueapp">
     <h1 class="title">Hello Worldss!</h1>
     <div class="container-fluid">
+
+      <button v-on:click="startblah" type="button" class="btn btn-primary btn-block">Start Mining</button>
+    <br>
     <template v-for="inp in inputs">
       <div class="row">
         <div class="col">
@@ -39,9 +42,6 @@
           <label class="checkbox-inline">
             <input :name="algo" type="checkbox" v-bind:value="algo" v-model="checkedAlgos"> {{ algo }}
           </label>
-          <!-- <label :for="algo">{{ algo }}</label>
-          <input type="checkbox"> Check me out
-        -->
         </div>
       </div>
 
@@ -61,16 +61,11 @@
         </div>
       </div>
 
-
-
-
-
-
       <div class="row special">
         <div class="col-sm">
-          <!-- <a v-if="inputs.gpunum.value > 0 && poolname != '' && checkedAlgos != ''" id="downloadClass" href=""> -->
-            <!-- <button v-on:click="downloadBat('start' + poolname + '.bat', 'text/plain', poolname)" class="button" href="">Download</button> -->
-            <button v-on:click="startblah" class="button">Download</button>
+          <a v-if="inputs.gpunum.value > 0 && poolname != '' && checkedAlgos != ''" id="downloadClass" href="">
+            <button v-on:click="downloadBat('start.bat', 'text/plain')" type="button" class="btn btn-default btn-block">Download</button>
+          </a>
         </div>
       </div>
     </div>

@@ -3,6 +3,16 @@ body {
   display: block;
 }
 
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
 .jumbotron {
   margin: 3rem;
 }
@@ -50,6 +60,7 @@ body {
   position: fixed;
   top: 0px;
   right: 6px;
+  z-index: 1;
 }
 
 .title-bar-btns button {

@@ -23,43 +23,53 @@ const vueapp = new Vue({
     inputs: {
       walletadress: {
         name: "Wallet Adress:",
-        value: ["D6VmxuuEDDxY2uSkMLUVS4GGXTEP8Xwnxu", ""]
+        value: "D6VmxuuEDDxY2uSkMLUVS4GGXTEP8Xwnxu",
+        help: ""
       },
       walletcoin: {
         name: "Wallet Coin:",
-        value: ["DGB", "Hilfe Text2"]
+        value: "DGB",
+        help: ""
       },
       workerlogin: {
         name: "Worker Login:",
-        value: ["doctororbit", "Hilfe Text3"]
+        value: "doctororbit",
+        help: ""
       },
       workername: {
         name: "Worker Name:",
-        value: ["doctororbit", "Hilfe Text4"]
+        value: "doctororbit",
+        help: "Hilfe Text4"
       },
       password: {
         name: "Password:",
-        value: ["x", "Hilfe Text5"]
+        value: "x",
+        help: "Hilfe Text5"
       },
       gpunum: {
         name: "Number of GPU\'s:",
-        value: ["1", "Hilfe Text6"]
+        value: "1",
+        help: "Hilfe Text6"
       },
       gainpct: {
         name: "Switch Algorithm on X% change:",
-        value: ["3", "Hilfe Text"]
+        value: "3",
+        help: "Hilfe Text"
       },
       donate: {
         name: "Donate X minutes per Day:",
-        value: ["5", "Hilfe Text"]
+        value: "5",
+        help: "Hilfe Text"
       },
       currency: {
         name: "Preferred Currency (i.e. USD/Day, EUR/Day etc.):",
-        value: ["USD", "Hilfe Text"]
+        value: "US",
+        help: "Hilfe Text"
       },
       location: {
         name: "Location:",
-        value: ["US", "Hilfe Text"]
+        value: "US",
+        help: "Hilfe Text"
       }
     }
   },

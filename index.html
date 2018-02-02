@@ -65,8 +65,8 @@
         </div>
 
         <div class="form-group">
-          <button v-if="inputs.gpunum.value > 0 && poolname != '' && checkedAlgos != '' && startM" v-on:click="startMiner(Algos)" type="button" class="btn btn-primary btn-block">Start Mining</button>
-          <button v-if="!startM" v-on:click="startMiner(__dirname + '\\scripts\\stop.bat')" type="button" class="btn btn-primary btn-block">Stop Mining</button>
+          <button v-show="showButton" v-on:click="startMiner(Algos)" type="button" class="btn btn-primary btn-block">Start Mining</button>
+          <button v-show="!startM" v-on:click="startMiner(__dirname + '\\scripts\\stop.bat')" type="button" class="btn btn-primary btn-block">Stop Mining</button>
         </div>
 
       </div>

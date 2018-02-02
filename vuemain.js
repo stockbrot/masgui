@@ -117,15 +117,39 @@ const vueapp = new Vue({
       a.download = name
     },
     missingName: function (inp) {
-      if (inp.name == this.inputs.gpunum.name || inp.name == this.inputs.donate.name || inp.name == this.inputs.gaimpact.name) {
-        return !inp.value.match(/\d+/g)
-        console.log('not the mama')
-      } else if(inp.name == this.inputs.currency.name || inp.name == this.inputs.location.name) {
-        return inp.value.match(/\d+/g)
-      } else {
-        return inp.value === ''
+      if (inp.value === ''){
+        inp.message = "Cannot be empty"
+        return true
+      } else if (inp.name == this.inputs.gpunum.name || inp.name == this.inputs.donate.name || inp.name == this.inputs.gaimpact.name) {
+        if (!inp.value.match(/\d+/g)) {
+          inp.message = "Has to be a number!"
+          return true
+        }
+      } else if (inp.name == this.inputs.currency.name || inp.name == this.inputs.location.name) {
+        if (inp.value.match(/\d+/g)) {
+          inp.message = "Has to be a text!"
+          return true
+        }
       }
     }
+    /*
+    missingName: function (inp) {
+      if (inp.value === ''){
+        inp.message = "Cannot be empty"
+        return true
+      } else if (inp.name == this.inputs.gpunum.name || inp.name == this.inputs.donate.name || inp.name == this.inputs.gaimpact.name) {
+        if (!inp.value.match(/\d+/g)) {
+          inp.message = "Has to be a number!"
+          return true
+        }
+      } else if (inp.name == this.inputs.currency.name || inp.name == this.inputs.location.name) {
+        if (inp.value.match(/\d+/g)) {
+          inp.message = "Has to be a text!"
+          return true
+        }
+      }
+    }
+    */
   },
   computed: {
     gpuNumbers() {
@@ -170,6 +194,14 @@ const vueapp = new Vue({
       this.command = this.command.join(' ')
 
       return this.command
+    },
+
+    showButton() {
+      if (this.inputs.gpunum.value > 0 && this.poolname != '' && this.checkedAlgos != '' && this.startM) {
+        document.body.scrollTop = document.body.scrollHeight
+        return true
+      }
     }
+
   }
 })

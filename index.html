@@ -32,21 +32,9 @@
         <template v-for="inp in inputs">
           <div class="form-group has-danger">
             <label :for="inp.value">{{ inp.name }}</label>
-            <!--
-            <template v-if="!inputs.gpunum.value.match(/\d+/g) || !inputs.donate.value.match(/\d+/g) || !inputs.gaimpact.value.match(/\d+/g)">
-              <p>lol</p>
-            </template> <template v-else-if="inputs.walletcoin.value.match(/\d+/g) || inputs.currency.value.match(/\d+/g) || inputs.location.value.match(/\d+/g)" >
-            </template>
-            -->
-
-            <template v-if="inp.value == '' || inp.value <= 0">
-              <input type="text" class="form-control form-control-lg is-invalid" :placeholder="inp.value" v-model="inp.value">
-              <div class="invalid-feedback">{{ inp.message }}</div>
-            </template> <template v-else>
-              <input type="text" class="form-control form-control-lg" :placeholder="inp.value" v-model="inp.value">
-              <small class="form-text text-muted">{{ inp.help }}</small>
-            </template>
-
+            <input type="text" v-bind:class="{ 'is-invalid': missingName(inp) }" class="form-control form-control-lg" :placeholder="inp.value" v-model="inp.value">
+            <small class="form-text text-muted">{{ inp.help }}</small>
+            <div class="invalid-feedback">{{ inp.message }}</div>
           </div>
         </template>
 

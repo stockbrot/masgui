@@ -26,61 +26,61 @@ const vueapp = new Vue({
         name: "Wallet Adress:",
         value: "D6VmxuuEDDxY2uSkMLUVS4GGXTEP8Xwnxu",
         help: "",
-        message: "asd"
+        message: "This field cannot be left empty!"
       },
       walletcoin: {
         name: "Wallet Coin:",
         value: "DGB",
         help: "",
-        message: "das"
+        message: "This field cannot be left empty!"
       },
       workerlogin: {
         name: "Worker Login:",
         value: "doctororbit",
         help: "",
-        message: "3"
+        message: "This is not necessary but recommended!"
       },
       workername: {
         name: "Worker Name:",
         value: "doctororbit",
-        help: "Hilfe Text4",
-        message: "4"
+        help: "",
+        message: "This field cannot be left empty!"
       },
       password: {
         name: "Password:",
         value: "x",
-        help: "Hilfe Text5",
-        message: "5"
+        help: "",
+        message: ""
       },
       gpunum: {
         name: "Number of GPU\'s:",
         value: "1",
-        help: "Hilfe Text6",
-        message: "6"
+        help: "",
+        message: "This field cannot be left empty!"
       },
       gaimpact: {
         name: "Switch Algorithm on X% change:",
         value: "3",
-        help: "Hilfe Text",
-        message: "7"
+        help: "",
+        message: "This field cannot be left empty!"
       },
       donate: {
         name: "Donate X minutes per Day:",
         value: "5",
-        help: "Hilfe Text",
-        message: "8"
+        help: "",
+        message: "This field cannot be left empty!"
       },
       currency: {
         name: "Preferred Currency (i.e. USD/Day, EUR/Day etc.):",
         value: "US",
-        help: "Hilfe Text",
-        message: "9"
+        help: "",
+        message: "This field cannot be left empty!"
       },
       location: {
         name: "Location:",
         value: "US",
-        help: "Hilfe Text",
-        message: "10"
+        help: "",
+        message: "This field cannot be left empty!"
       }
     }
   },
@@ -116,62 +116,60 @@ const vueapp = new Vue({
       a.href = URL.createObjectURL(file)
       a.download = name
     },
-    filteredList(data, id) {
-      /*
-      */
-
-      if (!data.match(/\d+/g)) {
-        var elem = document.getElementById(id)
-        elem.classList.toggle('is-invalid');
+    missingName: function (inp) {
+      if (inp.name == this.inputs.gpunum.name || inp.name == this.inputs.donate.name || inp.name == this.inputs.gaimpact.name) {
+        return !inp.value.match(/\d+/g)
+        console.log('not the mama')
+      } else if(inp.name == this.inputs.currency.name || inp.name == this.inputs.location.name) {
+        return inp.value.match(/\d+/g)
+      } else {
+        return inp.value === ''
       }
-      console.log(data)
-      console.log(id)
-  }
-},
-computed: {
-  gpuNumbers() {
-    let gpulist = {
-      gpuc: '',
-      gpus: ''
     }
-    for (i = 0; i < this.inputs.gpunum.value.length; i++) {
-      gpulist.gpuc += i + ','
-      gpulist.gpus += i + ' '
-    }
-    gpulist.gpuc = gpulist.gpuc.substring(0, gpulist.gpuc.length - 1)
-    gpulist.gpus = gpulist.gpus.substring(0, gpulist.gpus.length - 1)
-    return gpulist
   },
+  computed: {
+    gpuNumbers() {
+      let gpulist = {
+        gpuc: '',
+        gpus: ''
+      }
+      for (i = 0; i < this.inputs.gpunum.value.length; i++) {
+        gpulist.gpuc += i + ','
+        gpulist.gpus += i + ' '
+      }
+      gpulist.gpuc = gpulist.gpuc.substring(0, gpulist.gpuc.length - 1)
+      gpulist.gpus = gpulist.gpus.substring(0, gpulist.gpus.length - 1)
+      return gpulist
+    },
 
-  Algos() {
-    this.algolist = this.checkedAlgos.join()
+    Algos() {
+      this.algolist = this.checkedAlgos.join()
 
-    if (this.poolname.toLowerCase() == 'zpool') {
-      this.inputs.location.value[0] = 'US'
+      if (this.poolname.toLowerCase() == 'zpool') {
+        this.inputs.location.value[0] = 'US'
+      }
+
+      this.command = [
+        "powershell -version 5.0 -noexit -executionpolicy bypass -windowstyle maximized -command",
+        __dirname + "\\scripts\\NemosMiner-v2.4.1.ps1",
+        "-SelGPUDSTM \'" + this.gpuNumbers.gpus + "'",
+        "-SelGPUCC \'" + this.gpuNumbers.gpuc + "'",
+        "-Currency " + this.inputs.currency.value,
+        "-Passwordcurrency " + this.inputs.walletcoin.value.toUpperCase(),
+        "-Interval 30",
+        "-Wallet " + this.inputs.walletadress.value,
+        "-Location " + this.inputs.location.value,
+        "-ActiveMinerGainPct " + this.inputs.gaimpact.value,
+        "-PoolName " + this.poolname.toLowerCase(),
+        "-WorkerName " + this.inputs.workername.value,
+        "-Type nvidia",
+        "-Algorithm " + this.algolist,
+        "-Donate " + this.inputs.donate.value
+      ]
+
+      this.command = this.command.join(' ')
+
+      return this.command
     }
-
-    this.command = [
-      "powershell -version 5.0 -noexit -executionpolicy bypass -windowstyle maximized -command",
-      __dirname + "\\scripts\\NemosMiner-v2.4.1.ps1",
-      "-SelGPUDSTM \'" + this.gpuNumbers.gpus + "'",
-      "-SelGPUCC \'" + this.gpuNumbers.gpuc + "'",
-      "-Currency " + this.inputs.currency.value,
-      "-Passwordcurrency " + this.inputs.walletcoin.value.toUpperCase(),
-      "-Interval 30",
-      "-Wallet " + this.inputs.walletadress.value,
-      "-Location " + this.inputs.location.value,
-      "-ActiveMinerGainPct " + this.inputs.gaimpact.value,
-      "-PoolName " + this.poolname.toLowerCase(),
-      "-WorkerName " + this.inputs.workername.value,
-      "-Type nvidia",
-      "-Algorithm " + this.algolist,
-      "-Donate " + this.inputs.donate.value
-    ]
-
-    this.command = this.command.join(' ')
-
-    return this.command
   }
-
-}
 })

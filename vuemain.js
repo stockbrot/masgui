@@ -1,6 +1,7 @@
 const vueapp = new Vue({
   el: '#vueapp',
   data: {
+    startM: true,
     gpulist: '',
     command: '',
     poolname: '',
@@ -74,12 +75,16 @@ const vueapp = new Vue({
     }
   },
   methods: {
-    startblah() {
+    startMiner(data) {
       var spawn = require('child_process').spawn,
-        ls = spawn('cmd.exe', ["/c", this.Algos], {
+        ls = spawn('cmd.exe', ["/c", data], {
           env: process.env,
           detached: true
         })
+
+      console.log(data)
+
+      this.startM = !this.startM
 
       ls.stdout.on('data', function(data) {
         console.log('stdout: ' + data)
@@ -129,17 +134,17 @@ computed: {
       __dirname + "\\scripts\\NemosMiner-v2.4.1.ps1",
       "-SelGPUDSTM \'" + this.gpuNumbers.gpus + "'",
       "-SelGPUCC \'" + this.gpuNumbers.gpuc + "'",
-      "-Currency " + this.inputs.currency.value[0],
-      "-Passwordcurrency " + this.inputs.walletcoin.value[0],
+      "-Currency " + this.inputs.currency.value,
+      "-Passwordcurrency " + this.inputs.walletcoin.value,
       "-Interval 30",
-      "-Wallet " + this.inputs.walletadress.value[0],
-      "-Location " + this.inputs.location.value[0],
-      "-ActiveMinerGainPct " + this.inputs.gainpct.value[0],
+      "-Wallet " + this.inputs.walletadress.value,
+      "-Location " + this.inputs.location.value,
+      "-ActiveMinerGainPct " + this.inputs.gainpct.value,
       "-PoolName " + this.poolname.toLowerCase(),
-      "-WorkerName " + this.inputs.workername.value[0],
+      "-WorkerName " + this.inputs.workername.value,
       "-Type nvidia",
       "-Algorithm " + this.algolist,
-      "-Donate " + this.inputs.donate.value[0]
+      "-Donate " + this.inputs.donate.value
     ]
 
     this.command = this.command.join(' ')

@@ -3,12 +3,12 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>MasGUI</title>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
-  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/main.css">
   <script type="text/javascript" src="titlebar.js">
 
   </script>
@@ -17,38 +17,28 @@
 <body class="scrollbar" id="style-8">
 
 
-  <div class="title-bar noselect">
+  <div class="title-bar">
     <div class="title-bar-title"><a>MasGUI 0.9.0</a></div>
     <div class="title-bar-btns">
-      <button v-on:click="titleBar" id="min-btn">-</button>
-      <button v-on:click="titleBar" id="max-btn">+</button>
-      <button v-on:click="titleBar" id="close-btn">x</button>
+      <button v-on:click="titleBar" id="min-btn"><i class="fas fa-minus"></i></button>
+      <button v-on:click="titleBar" id="max-btn"><i class="far fa-square"></i></button>
+      <button v-on:click="titleBar" id="close-btn"><i class="fas fa-times"></i></button>
     </div>
   </div>
   <div id="vueapp">
     <div class="container-fluid">
       <div class="jumbotron">
 
-        <h1 class="title">MasGUI</h1>
+        <h1 class="title noselect">MASGUI</h1>
 
         <!-- Inputs -->
         <template v-for="inp in inputs">
           <div class="form-group">
             <label :for="inp.value">{{ inp.name }}</label>
-            <input type="text" class="form-control" aria-describedby="inp.value" :placeholder="inp.value" v-model="inp.value">
+            <input type="text" class="form-control form-control-lg" aria-describedby="inp.value" :placeholder="inp.value" v-model="inp.value">
             <small id="inp.value" class="form-text text-muted">{{ inp.help }}</small>
           </div>
         </template>
-
-        <!-- Algorithm Checkbox -->
-        <div class="form-group row">
-          <template v-for="algo in pools[poolname]">
-              <div class="custom-control custom-checkbox col col-md-3">
-                  <input class="custom-control-input" :id="algo" :name="algo" type="checkbox" v-bind:value="algo" v-model="checkedAlgos">
-                  <label class="custom-control-label" :for="algo">{{ algo }}</label>
-              </div>
-          </template>
-        </div>
 
         <!-- Select -->
         <div class="form-group">
@@ -66,7 +56,19 @@
           </div>
         </div>
 
-        <button v-if="inputs.gpunum.value > 0 && poolname != '' && checkedAlgos != ''" v-on:click="startblah" type="button" class="btn btn-primary btn-block">Start Mining</button>
+        <!-- Algorithm Checkbox -->
+        <div class="form-group row">
+          <template v-for="algo in pools[poolname]">
+              <div class="custom-control custom-checkbox col col-md-3">
+                  <input class="custom-control-input" :id="algo" :name="algo" type="checkbox" v-bind:value="algo" v-model="checkedAlgos">
+                  <label class="custom-control-label" :for="algo">{{ algo }}</label>
+              </div>
+          </template>
+        </div>
+
+
+        <button v-if="inputs.gpunum.value > 0 && poolname != '' && checkedAlgos != '' && startM == true" v-on:click="startMiner(Algos)" type="button" class="btn btn-primary btn-block">Start Mining</button>
+        <button v-if="startM == false" v-on:click="startMiner(__dirname + '\\scripts\\stop.bat')" type="button" class="btn btn-primary btn-block">Stop Mining</button>
         <br>
 
         <!-- Select
@@ -94,6 +96,8 @@
   <script>
     require('./vuemain.js')
   </script>
+
+
 </body>
 
 <!--

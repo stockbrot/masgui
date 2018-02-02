@@ -1,6 +1,20 @@
+html {
+  font-family: sans-serif;
+}
+
 body {
   padding: 0px;
   display: block;
+  font-family: "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+input {
+  font-family: monospace;
+}
+
+
+h1 {
+  text-align: center;
 }
 
 .noselect {
@@ -43,10 +57,11 @@ body {
 
 .title-bar-title {
   position: fixed;
+  z-index: 1;
   height: 32px;
   width: 100%;
   padding-top: 5px;
-  background-color: #3f3f41;
+  background-color: #073642;
   background-attachment: fixed;
   color: #f1f1f1;
 }
@@ -60,7 +75,7 @@ body {
   position: fixed;
   top: 0px;
   right: 6px;
-  z-index: 1;
+  z-index: 2;
 }
 
 .title-bar-btns button {
@@ -74,7 +89,8 @@ body {
 }
 
 .title-bar-btns button:hover {
-  background-color: #616165;
+  /* background-color: #616165; */
+  color: #B58900;
 }
 
     /*
@@ -99,5 +115,28 @@ body {
 }
 
 #style-8::-webkit-scrollbar-thumb {
-  background-color: #3f3f41;
+  background-color: #073642;
+}
+
+.custom-select {
+  background-color: #a9bdbd !important;
+  border: none !important;
+}
+
+.custom-checkbox .custom-control-input ~ .custom-control-label::before {
+  background-color: #a9bdbd;
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+  background-color: #B58900;
+}
+
+.form-control {
+  border-radius: 0.5rem;
+}
+
+.form-control:focus {
+  border-color: #B58900;
+  border-width: thick;
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);
 }

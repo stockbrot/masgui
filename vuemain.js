@@ -15,62 +15,72 @@ const vueapp = new Vue({
       "nicehash"
     ],
     pools: {
-      hashpool: ["xevan", "hsr", "phi", "tribus", "c11", "lbry", "skein", "sib", "bitcore", "x17", "Nist5", "myr-gro", "Lyra2RE2", "neoscrypt", "blake2s", "skunk"],
+      hashpool: ["xevan", "hsr", "phi", "tribus", "c11", "lbry", "skein", "sib", "bitcore", "x17", "Nist5", "MyriadGroestl", "Lyra2RE2", "neoscrypt", "blake2s", "skunk"],
       hashrefinery: ["skunk", "phi", "xevan", "tribus", "skein", "bitcore", "x17", "Nist5", "Lyra2RE2", "neoscrypt"],
-      miningpoolhub: ["cryp-night", "keccak", "lyra2z", "skein", "equihash", "groestl", "myr-gro", "Lyra2RE2", "neoscrypt"],
-      zpool: ["poly", "hsr", "keccak", "xevan", "veltor", "skunk", "tribus", "c11", "x11evo", "lbry", "phi", "skein", "equihash", "groestl", "timetravel", "sib", "bitcore", "x17", "blakecoin", "Nist5", "myr-gro", "Lyra2RE2", "neoscrypt", "blake2s"],
-      nicehash: ["cryp-night", "keccak", "skunk", "lbry", "equihash", "Nist5", "Lyra2RE2", "neoscrypt", "blake2s"]
+      miningpoolhub: ["CryptoNight", "keccak", "lyra2z", "skein", "equihash", "groestl", "MyriadGroestl", "Lyra2RE2", "neoscrypt"],
+      zpool: ["poly", "hsr", "keccak", "xevan", "veltor", "skunk", "tribus", "c11", "x11evo", "lbry", "phi", "skein", "equihash", "groestl", "timetravel", "sib", "bitcore", "x17", "blakecoin", "Nist5", "MyriadGroestl", "Lyra2RE2", "neoscrypt", "blake2s"],
+      nicehash: ["CryptoNight", "keccak", "skunk", "lbry", "equihash", "Nist5", "Lyra2RE2", "neoscrypt", "blake2s"]
     },
     inputs: {
       walletadress: {
         name: "Wallet Adress:",
         value: "D6VmxuuEDDxY2uSkMLUVS4GGXTEP8Xwnxu",
-        help: ""
+        help: "",
+        message: "asd"
       },
       walletcoin: {
         name: "Wallet Coin:",
         value: "DGB",
-        help: ""
+        help: "",
+        message: "das"
       },
       workerlogin: {
         name: "Worker Login:",
         value: "doctororbit",
-        help: ""
+        help: "",
+        message: "3"
       },
       workername: {
         name: "Worker Name:",
         value: "doctororbit",
-        help: "Hilfe Text4"
+        help: "Hilfe Text4",
+        message: "4"
       },
       password: {
         name: "Password:",
         value: "x",
-        help: "Hilfe Text5"
+        help: "Hilfe Text5",
+        message: "5"
       },
       gpunum: {
         name: "Number of GPU\'s:",
         value: "1",
-        help: "Hilfe Text6"
+        help: "Hilfe Text6",
+        message: "6"
       },
-      gainpct: {
+      gaimpact: {
         name: "Switch Algorithm on X% change:",
         value: "3",
-        help: "Hilfe Text"
+        help: "Hilfe Text",
+        message: "7"
       },
       donate: {
         name: "Donate X minutes per Day:",
         value: "5",
-        help: "Hilfe Text"
+        help: "Hilfe Text",
+        message: "8"
       },
       currency: {
         name: "Preferred Currency (i.e. USD/Day, EUR/Day etc.):",
         value: "US",
-        help: "Hilfe Text"
+        help: "Hilfe Text",
+        message: "9"
       },
       location: {
         name: "Location:",
         value: "US",
-        help: "Hilfe Text"
+        help: "Hilfe Text",
+        message: "10"
       }
     }
   },
@@ -105,7 +115,18 @@ const vueapp = new Vue({
       })
       a.href = URL.createObjectURL(file)
       a.download = name
-    }
+    },
+    filteredList(data, id) {
+      /*
+      */
+
+      if (!data.match(/\d+/g)) {
+        var elem = document.getElementById(id)
+        elem.classList.toggle('is-invalid');
+      }
+      console.log(data)
+      console.log(id)
+  }
 },
 computed: {
   gpuNumbers() {
@@ -135,11 +156,11 @@ computed: {
       "-SelGPUDSTM \'" + this.gpuNumbers.gpus + "'",
       "-SelGPUCC \'" + this.gpuNumbers.gpuc + "'",
       "-Currency " + this.inputs.currency.value,
-      "-Passwordcurrency " + this.inputs.walletcoin.value,
+      "-Passwordcurrency " + this.inputs.walletcoin.value.toUpperCase(),
       "-Interval 30",
       "-Wallet " + this.inputs.walletadress.value,
       "-Location " + this.inputs.location.value,
-      "-ActiveMinerGainPct " + this.inputs.gainpct.value,
+      "-ActiveMinerGainPct " + this.inputs.gaimpact.value,
       "-PoolName " + this.poolname.toLowerCase(),
       "-WorkerName " + this.inputs.workername.value,
       "-Type nvidia",
@@ -151,5 +172,6 @@ computed: {
 
     return this.command
   }
+
 }
 })

@@ -9,22 +9,19 @@
   <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/main.css">
-  <script type="text/javascript" src="titlebar.js">
-
-  </script>
 </head>
 <!-- 3, 4, 8,  -->
+<div class="title-bar noselect">
+  <div class="title-bar-title"><a>MasGUI 0.9.0</a></div>
+  <div class="title-bar-btns">
+    <button id="min-btn"><i class="fas fa-minus"></i></button>
+    <button id="max-btn"><i class="far fa-square"></i></button>
+    <button id="close-btn"><i class="fas fa-times"></i></button>
+  </div>
+</div>
 <body class="scrollbar" id="style-8">
 
 
-  <div class="title-bar">
-    <div class="title-bar-title"><a>MasGUI 0.9.0</a></div>
-    <div class="title-bar-btns">
-      <button v-on:click="titleBar" id="min-btn"><i class="fas fa-minus"></i></button>
-      <button v-on:click="titleBar" id="max-btn"><i class="far fa-square"></i></button>
-      <button v-on:click="titleBar" id="close-btn"><i class="fas fa-times"></i></button>
-    </div>
-  </div>
   <div id="vueapp">
     <div class="container-fluid">
       <div class="jumbotron">
@@ -33,15 +30,28 @@
 
         <!-- Inputs -->
         <template v-for="inp in inputs">
-          <div class="form-group">
+          <div class="form-group has-danger">
             <label :for="inp.value">{{ inp.name }}</label>
-            <input type="text" class="form-control form-control-lg" aria-describedby="inp.value" :placeholder="inp.value" v-model="inp.value">
-            <small id="inp.value" class="form-text text-muted">{{ inp.help }}</small>
+            <!--
+            <template v-if="!inputs.gpunum.value.match(/\d+/g) || !inputs.donate.value.match(/\d+/g) || !inputs.gaimpact.value.match(/\d+/g)">
+              <p>lol</p>
+            </template> <template v-else-if="inputs.walletcoin.value.match(/\d+/g) || inputs.currency.value.match(/\d+/g) || inputs.location.value.match(/\d+/g)" >
+            </template>
+            -->
+
+            <template v-if="inp.value == '' || inp.value <= 0">
+              <input type="text" class="form-control form-control-lg is-invalid" :placeholder="inp.value" v-model="inp.value">
+              <div class="invalid-feedback">{{ inp.message }}</div>
+            </template> <template v-else>
+              <input type="text" class="form-control form-control-lg" :placeholder="inp.value" v-model="inp.value">
+              <small class="form-text text-muted">{{ inp.help }}</small>
+            </template>
+
           </div>
         </template>
 
         <!-- Select -->
-        <div class="form-group">
+        <div id="selectDiv" class="form-group">
           <label :for="poolname">Pool:</label>
           <div class="form-control">
             <select class="custom-select" v-model="poolname" aria-describedby="poolname">
@@ -57,7 +67,7 @@
         </div>
 
         <!-- Algorithm Checkbox -->
-        <div class="form-group row">
+        <div id="algoDiv" class="form-group row">
           <template v-for="algo in pools[poolname]">
               <div class="custom-control custom-checkbox col col-md-3">
                   <input class="custom-control-input" :id="algo" :name="algo" type="checkbox" v-bind:value="algo" v-model="checkedAlgos">
@@ -66,28 +76,10 @@
           </template>
         </div>
 
-
-        <button v-if="inputs.gpunum.value > 0 && poolname != '' && checkedAlgos != '' && startM == true" v-on:click="startMiner(Algos)" type="button" class="btn btn-primary btn-block">Start Mining</button>
-        <button v-if="startM == false" v-on:click="startMiner(__dirname + '\\scripts\\stop.bat')" type="button" class="btn btn-primary btn-block">Stop Mining</button>
-        <br>
-
-        <!-- Select
-        <div class="row">
-          <div class="col">
-            Poolname:
-          </div>
-          <div class="col">
-            <select class="custom-select" v-model="poolname">
-            <option disabled value="">
-              Please Select One
-            </option>
-            <option v-for="pool in poolnames">
-              {{ pool }}
-            </option>
-          </select>
-          </div>
+        <div class="form-group">
+          <button v-if="inputs.gpunum.value > 0 && poolname != '' && checkedAlgos != '' && startM" v-on:click="startMiner(Algos)" type="button" class="btn btn-primary btn-block">Start Mining</button>
+          <button v-if="!startM" v-on:click="startMiner(__dirname + '\\scripts\\stop.bat')" type="button" class="btn btn-primary btn-block">Stop Mining</button>
         </div>
-      -->
 
       </div>
     </div>
@@ -95,6 +87,7 @@
 
   <script>
     require('./vuemain.js')
+    require('./titlebar.js')
   </script>
 
 

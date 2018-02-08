@@ -10,7 +10,8 @@
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/main.css">
 </head>
-<!-- 3, 4, 8,  -->
+
+<!-- Custom Title Bar  -->
 <div class="title-bar noselect">
   <div class="title-bar-title"><a>MasGUI 0.9.0</a></div>
   <div class="title-bar-btns">
@@ -19,6 +20,7 @@
     <button id="close-btn"><i class="fas fa-times"></i></button>
   </div>
 </div>
+
 <body class="scrollbar" id="style-8">
 
 
@@ -33,12 +35,27 @@
           <div class="form-group has-danger">
             <label :for="inp.value">{{ inp.name }}</label>
             <input type="text" v-bind:class="{ 'is-invalid': missingName(inp) }" class="form-control form-control-lg" :placeholder="inp.value" v-model="inp.value">
-            <small class="form-text text-muted">{{ inp.help }}</small>
+            <small class="form-text text-muted help-text">{{ inp.help }}</small>
             <div class="invalid-feedback">{{ inp.message }}</div>
           </div>
         </template>
 
-        <!-- Select -->
+        <!-- Alt Inputs
+        <template v-for="inp in inputs">
+          <div class="form-group has-danger">
+            <div class="row">
+              <div class="col-md-4">
+                <label :for="inp.value">{{ inp.name }}</label>
+              </div>
+              <div class="col-md-8">
+                <input type="text" v-bind:class="{ 'is-invalid': missingName(inp) }" class="form-control form-control-lg" :placeholder="inp.value" v-model="inp.value">
+              </div>
+            </div>
+          </div>
+        </template>
+      -->
+
+        <!-- Select Pool -->
         <div id="selectDiv" class="form-group">
           <label :for="poolname">Pool:</label>
           <div class="form-control">
@@ -46,27 +63,28 @@
               <option disabled value="">
                 Please Select One
               </option>
-              <option v-for="pool in poolnames">
+              <option :value="pool.toLowerCase()" v-for="pool in poolnames">
                 {{ pool }}
               </option>
             </select>
-            <small id="poolname" class="form-text text-muted">Hier könnten sachen basierend auf den pool stehen.</small>
+            <small id="poolname" class="form-text text-muted pool-help-text">Hier könnten sachen basierend auf den pool stehen.</small>
           </div>
         </div>
 
         <!-- Algorithm Checkbox -->
         <div id="algoDiv" class="form-group row">
           <template v-for="algo in pools[poolname]">
-              <div class="custom-control custom-checkbox col col-md-3">
+              <div class="custom-control custom-checkbox col col-md-3 col-sm-4">
                   <input class="custom-control-input" :id="algo" :name="algo" type="checkbox" v-bind:value="algo" v-model="checkedAlgos">
                   <label class="custom-control-label" :for="algo">{{ algo }}</label>
               </div>
           </template>
         </div>
 
+        <!-- Mining Button IF's -->
         <div class="form-group">
-          <button v-show="showButton" v-on:click="startMiner(Algos)" type="button" class="btn btn-primary btn-block">Start Mining</button>
-          <button v-show="!startM" v-on:click="startMiner(__dirname + '\\scripts\\stop.bat')" type="button" class="btn btn-primary btn-block">Stop Mining</button>
+          <button v-if="showButton" v-on:click="startMiner(Algos)" type="button" class="btn btn-primary btn-block">Start Mining</button>
+          <button v-if="!startM" v-on:click="startMiner(__dirname + '\\scripts\\stop.bat')" type="button" class="btn btn-primary btn-block">Stop & Close all Mining Windows</button>
         </div>
 
       </div>
@@ -77,8 +95,6 @@
     require('./vuemain.js')
     require('./titlebar.js')
   </script>
-
-
 </body>
 
 <!--

@@ -8,11 +8,11 @@ const vueapp = new Vue({
     checkedAlgos: [],
     alglolist: '',
     poolnames: [
-      "hashpool",
-      "hashrefinery",
-      "miningpoolhub",
-      "zpool",
-      "nicehash"
+      "HashPool",
+      "HashRefinery",
+      "MiningPoolHub",
+      "Zpool",
+      "NiceHash"
     ],
     pools: {
       hashpool: ["xevan", "hsr", "phi", "tribus", "c11", "lbry", "skein", "sib", "bitcore", "x17", "Nist5", "MyriadGroestl", "Lyra2RE2", "neoscrypt", "blake2s", "skunk"],
@@ -23,64 +23,64 @@ const vueapp = new Vue({
     },
     inputs: {
       walletadress: {
-        name: "Wallet Adress:",
+        name: "Wallet Address:",
         value: "D6VmxuuEDDxY2uSkMLUVS4GGXTEP8Xwnxu",
-        help: "",
-        message: "This field cannot be left empty!"
+        help: "Make sure that this is a valid address",
+        message: ""
       },
       walletcoin: {
         name: "Wallet Coin:",
-        value: "DGB",
-        help: "",
-        message: "This field cannot be left empty!"
+        value: "BTC",
+        help: "This has to match the Wallet Address above",
+        message: ""
       },
       workerlogin: {
         name: "Worker Login:",
         value: "doctororbit",
-        help: "",
-        message: "This is not necessary but recommended!"
+        help: "Login for MiningPoolHub, whatever you like for the rest.",
+        message: ""
       },
       workername: {
         name: "Worker Name:",
         value: "doctororbit",
-        help: "",
-        message: "This field cannot be left empty!"
+        help: "Can be whatever you like",
+        message: ""
       },
       password: {
         name: "Password:",
         value: "x",
-        help: "",
+        help: "'x' is fine, but you can change it if you prefer",
         message: ""
       },
       gpunum: {
-        name: "Number of GPU\'s:",
+        name: "GPU\'s:",
         value: "1",
-        help: "",
-        message: "This field cannot be left empty!"
+        help: "Number of GPU's that should run on this Software (Nvidia only for now)",
+        message: ""
       },
       gaimpact: {
         name: "Switch Algorithm on X% change:",
         value: "3",
-        help: "",
-        message: "This field cannot be left empty!"
+        help: "Switches to a more profitable algorithm once the difference is <= 3%",
+        message: ""
       },
       donate: {
         name: "Donate X minutes per Day:",
         value: "5",
-        help: "",
-        message: "This field cannot be left empty!"
+        help: "Number of minutes you want to donate per day (0 is not possible in Trial version)",
+        message: ""
       },
       currency: {
-        name: "Preferred Currency (i.e. USD/Day, EUR/Day etc.):",
-        value: "US",
-        help: "",
-        message: "This field cannot be left empty!"
+        name: "Preferred Currency for displaying Profits/Day:",
+        value: "USD",
+        help: "(i.e. USD/Day, EUR/Day etc.)",
+        message: ""
       },
       location: {
         name: "Location:",
         value: "US",
-        help: "",
-        message: "This field cannot be left empty!"
+        help: "Europe, Asia, US",
+        message: ""
       }
     }
   },
@@ -95,6 +95,7 @@ const vueapp = new Vue({
       console.log(data)
 
       this.startM = !this.startM
+      console.log("StartM: " + this.startM);
 
       ls.stdout.on('data', function(data) {
         console.log('stdout: ' + data)
@@ -116,40 +117,24 @@ const vueapp = new Vue({
       a.href = URL.createObjectURL(file)
       a.download = name
     },
-    missingName: function (inp) {
-      if (inp.value === ''){
+    missingName: function(inp) {
+      if (inp.value === '') {
         inp.message = "Cannot be empty"
         return true
       } else if (inp.name == this.inputs.gpunum.name || inp.name == this.inputs.donate.name || inp.name == this.inputs.gaimpact.name) {
-        if (!inp.value.match(/\d+/g)) {
+        //if (!inp.value.match(/\d+/g)) {
+        if (isNaN(inp.value)) {
           inp.message = "Has to be a number!"
           return true
         }
       } else if (inp.name == this.inputs.currency.name || inp.name == this.inputs.location.name) {
-        if (inp.value.match(/\d+/g)) {
+        //if (inp.value.match(/\d+/g)) {
+        if (!isNaN(inp.value)) {
           inp.message = "Has to be a text!"
           return true
         }
       }
     }
-    /*
-    missingName: function (inp) {
-      if (inp.value === ''){
-        inp.message = "Cannot be empty"
-        return true
-      } else if (inp.name == this.inputs.gpunum.name || inp.name == this.inputs.donate.name || inp.name == this.inputs.gaimpact.name) {
-        if (!inp.value.match(/\d+/g)) {
-          inp.message = "Has to be a number!"
-          return true
-        }
-      } else if (inp.name == this.inputs.currency.name || inp.name == this.inputs.location.name) {
-        if (inp.value.match(/\d+/g)) {
-          inp.message = "Has to be a text!"
-          return true
-        }
-      }
-    }
-    */
   },
   computed: {
     gpuNumbers() {
@@ -170,7 +155,12 @@ const vueapp = new Vue({
       this.algolist = this.checkedAlgos.join()
 
       if (this.poolname.toLowerCase() == 'zpool') {
-        this.inputs.location.value[0] = 'US'
+        this.inputs.location.value = 'US'
+      }
+
+      if (this.inputs.donate.value <= 5) {
+        this.inputs.donate.value = 5
+        console.log(this.inputs.donate.value);
       }
 
       this.command = [
@@ -179,7 +169,7 @@ const vueapp = new Vue({
         "-SelGPUDSTM \'" + this.gpuNumbers.gpus + "'",
         "-SelGPUCC \'" + this.gpuNumbers.gpuc + "'",
         "-Currency " + this.inputs.currency.value,
-        "-Passwordcurrency " + this.inputs.walletcoin.value.toUpperCase(),
+        "-Passwordcurrency " + this.inputs.walletcoin.value,
         "-Interval 30",
         "-Wallet " + this.inputs.walletadress.value,
         "-Location " + this.inputs.location.value,
@@ -198,7 +188,6 @@ const vueapp = new Vue({
 
     showButton() {
       if (this.inputs.gpunum.value > 0 && this.poolname != '' && this.checkedAlgos != '' && this.startM) {
-        document.body.scrollTop = document.body.scrollHeight
         return true
       }
     }

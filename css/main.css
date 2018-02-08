@@ -13,10 +13,22 @@ input,
   font-family: monospace;
 }
 
-
+.input-class {
+  text-align: center;
+}
 
 h1 {
   text-align: center;
+  font-size: 3.5rem;
+}
+
+h5 {
+  margin-bottom: 0;
+}
+
+label {
+  font-size: 1.1rem;
+  font-weight: bold;
 }
 
 .noselect {
@@ -43,6 +55,10 @@ h1 {
 
 .special {
   margin-bottom: 0px;
+}
+
+.profit-a {
+  color: #284346;
 }
 
     /*

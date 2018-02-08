@@ -25,25 +25,25 @@ const vueapp = new Vue({
       walletadress: {
         name: "Wallet Address:",
         value: "D6VmxuuEDDxY2uSkMLUVS4GGXTEP8Xwnxu",
-        help: "Make sure that this is a valid address",
+        help: "Make sure that this is a valid address and use the proper coin symbol below!",
         message: ""
       },
       walletcoin: {
         name: "Wallet Coin:",
         value: "BTC",
-        help: "This has to match the Wallet Address above",
+        help: "BTC is recommended, check the MasGUI Website or Bitcointalk forum post to see which currencies are supported",
         message: ""
       },
       workerlogin: {
         name: "Worker Login:",
         value: "doctororbit",
-        help: "Login for MiningPoolHub, whatever you like for the rest.",
+        help: "Only required for MiningPoolHub.",
         message: ""
       },
       workername: {
         name: "Worker Name:",
         value: "doctororbit",
-        help: "Can be whatever you like",
+        help: "Can be whatever you like.",
         message: ""
       },
       password: {
@@ -61,7 +61,7 @@ const vueapp = new Vue({
       gaimpact: {
         name: "Switch Algorithm on X% change:",
         value: "3",
-        help: "Switches to a more profitable algorithm once the difference is <= 3%",
+        help: "Switches to a more profitable algorithm once the difference is >= X%",
         message: ""
       },
       donate: {
@@ -73,7 +73,7 @@ const vueapp = new Vue({
       currency: {
         name: "Preferred Currency for displaying Profits/Day:",
         value: "USD",
-        help: "(i.e. USD/Day, EUR/Day etc.)",
+        help: "(GBP, USD, AUD, EUR)",
         message: ""
       },
       location: {
@@ -117,7 +117,7 @@ const vueapp = new Vue({
       a.href = URL.createObjectURL(file)
       a.download = name
     },
-    missingName: function(inp) {
+    missingName(inp) {
       if (inp.value === '') {
         inp.message = "Cannot be empty"
         return true

@@ -34,7 +34,7 @@
         <template v-for="inp in inputs">
           <div class="form-group has-danger">
             <label :for="inp.value">{{ inp.name }}</label>
-            <input type="text" v-bind:class="{ 'is-invalid': missingName(inp) }" class="form-control form-control-lg" :placeholder="inp.value" v-model="inp.value">
+            <input type="text" v-bind:class="{ 'is-invalid': missingName(inp) }" class="form-control form-control-lg input-class" :placeholder="inp.value" v-model="inp.value">
             <small class="form-text text-muted help-text">{{ inp.help }}</small>
             <div class="invalid-feedback">{{ inp.message }}</div>
           </div>
@@ -67,7 +67,7 @@
                 {{ pool }}
               </option>
             </select>
-            <small id="poolname" class="form-text text-muted pool-help-text">Hier könnten sachen basierend auf den pool stehen.</small>
+            <small id="poolname" class="form-text text-muted pool-help-text">Select a Pool to see the available Algorithms you can choose from. <br /> It will run a Bechmark once you Start Mining that Algorithm for the first time (for 150 seconds per algorithm)</small>
           </div>
         </div>
 
@@ -85,6 +85,33 @@
         <div class="form-group">
           <button v-if="showButton" v-on:click="startMiner(Algos)" type="button" class="btn btn-primary btn-block">Start Mining</button>
           <button v-if="!startM" v-on:click="startMiner(__dirname + '\\scripts\\stop.bat')" type="button" class="btn btn-primary btn-block">Stop & Close all Mining Windows</button>
+        </div>
+
+        <!-- Check Profits -->
+        <h5>Check your current Profits:</h5>
+        <small class="form-text text-muted help-text">Close the new Window by pressing Ctrl+W <br>(This is based on the Wallet Address set at the top)</small>
+
+        <div class="row">
+          <div class="form-group col col-md-3">
+            <button class="btn btn-success btn-block">
+              <a class="profit-a" href="http://www.miningpoolhub.com/" target="_blank">MiningPoolHub</a></button>
+          </div>
+          <div class="form-group col col-md-3">
+            <button class="btn btn-success btn-block">
+              <a class="profit-a" :href="'http://www.zpool.ca/?address=' + inputs.walletadress.value" target="_blank">Zpool</a></button>
+          </div>
+          <div class="form-group col col-md-3">
+            <button class="btn btn-success btn-block">
+              <a class="profit-a" href="http://www.google.com/" target="_blank">HashRefinery</a></button>
+          </div>
+          <div class="form-group col col-md-3">
+            <button class="btn btn-success btn-block">
+              <a class="profit-a" href="http://www.google.com/" target="_blank">NiceHash</a></button>
+          </div>
+          <div class="form-group col col-md-3">
+            <button class="btn btn-success btn-block">
+              <a class="profit-a" href="http://www.google.com/" target="_blank">HashPool</a></button>
+          </div>
         </div>
 
       </div>

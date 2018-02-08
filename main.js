@@ -1,4 +1,8 @@
-const {app, BrowserWindow} = require('electron')
+const electron = require('electron')
+const {
+  app,
+  BrowserWindow
+} = electron
 
 /*
 require('electron-reload')(__dirname);
@@ -12,8 +16,17 @@ const url = require('url')
 
 let mainWindow
 
-function createWindow () {
-  mainWindow = new BrowserWindow({width: 900, height: 900, frame: false})
+function createWindow() {
+  // mainWindow = new BrowserWindow({width: 900, height: 900, frame: false})
+  const {
+    width,
+    height
+  } = electron.screen.getPrimaryDisplay().workAreaSize
+  mainWindow = new BrowserWindow({
+    width: width * .5,
+    height: height * .9,
+    frame: false
+  })
 
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
@@ -21,7 +34,7 @@ function createWindow () {
     slashes: true
   }))
 
-  mainWindow.on('closed', function () {
+  mainWindow.on('closed', function() {
     mainWindow = null
   })
 }
@@ -33,13 +46,13 @@ app.on('browser-window-created',function(e,window) {
  });
  */
 
-app.on('window-all-closed', function () {
+app.on('window-all-closed', function() {
   if (process.platform !== 'darwin') {
     app.quit()
   }
 })
 
-app.on('activate', function () {
+app.on('activate', function() {
   if (mainWindow === null) {
     createWindow()
   }

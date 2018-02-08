@@ -8,30 +8,36 @@ const vueapp = new Vue({
     checkedAlgos: [],
     alglolist: '',
     poolnames: [
-      "HashPool",
+      "AHashPool",
+      "BlazePool",
       "HashRefinery",
+      "MineMoney",
       "MiningPoolHub",
-      "Zpool",
-      "NiceHash"
+      "NiceHash",
+      "ZergPool",
+      "Zpool"
     ],
     pools: {
-      hashpool: ["xevan", "hsr", "phi", "tribus", "c11", "lbry", "skein", "sib", "bitcore", "x17", "Nist5", "MyriadGroestl", "Lyra2RE2", "neoscrypt", "blake2s", "skunk"],
-      hashrefinery: ["skunk", "xevan", "tribus", "skein", "bitcore", "x17", "Nist5", "Lyra2RE2", "neoscrypt"],
-      miningpoolhub: ["CryptoNight", "keccak", "lyra2z", "skein", "equihash", "groestl", "MyriadGroestl", "Lyra2RE2", "neoscrypt"],
-      zpool: ["poly", "hsr", "keccak", "xevan", "veltor", "skunk", "tribus", "c11", "x11evo", "lbry", "phi", "skein", "equihash", "groestl", "timetravel", "sib", "bitcore", "x17", "blakecoin", "Nist5", "MyriadGroestl", "Lyra2RE2", "neoscrypt", "blake2s"],
-      nicehash: ["CryptoNight", "keccak", "skunk", "lbry", "equihash", "Nist5", "Lyra2RE2", "neoscrypt", "blake2s"]
+      ahashpool: ["xevan", "hsr", "phi", "tribus", "c11", "lbry", "skein", "sib", "bitcore", "x17", "Nist5", "MyriadGroestl", "Lyra2RE2", "neoscrypt", "blake2s", "skunk"],
+      blazepool: ["xevan", "hsr", "phi", "tribus", "c11", "skein", "groestl", "sib", "bitcore", "x17", "Nist5", "Lyra2RE2", "neoscrypt", "blake2s", "yescrypt", "blakecoin", "keccak"],
+      hashrefinery: ["skunk", "phi", "xevan", "tribus", "skein", "bitcore", "x17", "Nist5", "Lyra2RE2", "neoscrypt"],
+      minemoney: ["poly", "hsr", "keccak", "xevan", "skunk", "tribus", "c11", "x11evo", "lbry", "phi", "skein", "groestl", "timetravel", "sib", "bitcore", "x17", "blakecoin", "Nist5", "MyriadGroestl", "Lyra2RE2", "neoscrypt", "blake2s"],
+      miningpoolhub: ["ethash", "cryptonight", "keccak", "lyra2z", "skein", "equihash", "groestl", "MyriadGroestl", "Lyra2RE2", "neoscrypt"],
+      nicehash: ["ethash", "x11gost", "cryptonight", "keccak", "skunk", "lbry", "equihash", "Nist5", "Lyra2RE2", "neoscrypt", "blake2s"],
+      zergpool: ["hsr", "xevan", "skunk", "tribus", "phi", "c11", "skein", "groestl", "sib", "bitcore", "x17", "Nist5", "MyriadGroestl", "Lyra2RE2", "neoscrypt", "blake2s", "lyra2z"],
+      zpool: ["poly", "hsr", "keccak", "xevan", "skunk", "tribus", "c11", "x11evo", "lbry", "phi", "skein", "equihash", "groestl", "timetravel", "sib", "bitcore", "x17", "blakecoin", "Nist5", "MyriadGroestl", "Lyra2RE2", "neoscrypt", "blake2s", "lyra2z"]
     },
     inputs: {
       walletadress: {
         name: "Wallet Address:",
         value: "D6VmxuuEDDxY2uSkMLUVS4GGXTEP8Xwnxu",
-        help: "Make sure that this is a valid address and use the proper coin symbol below!",
+        help: "Make sure that this is a valid address and use the matching coin symbol below!",
         message: ""
       },
       walletcoin: {
         name: "Wallet Coin:",
-        value: "BTC",
-        help: "BTC is recommended, check the MasGUI Website or Bitcointalk forum post to see which currencies are supported",
+        value: "DGB",
+        help: "Using a BTC Wallet Address is recommended, but it can be set to any coin that the Pool supports (Blazepool ONLY supports BTC).",
         message: ""
       },
       workerlogin: {
@@ -49,13 +55,13 @@ const vueapp = new Vue({
       password: {
         name: "Password:",
         value: "x",
-        help: "'x' is fine, but you can change it if you prefer",
+        help: "'x' is fine, but you can change it if you prefer.",
         message: ""
       },
       gpunum: {
         name: "GPU\'s:",
         value: "1",
-        help: "Number of GPU's that should run on this Software (Nvidia only for now)",
+        help: "Number of GPU's that should run on this Software (Nvidia only for now).",
         message: ""
       },
       gaimpact: {
@@ -85,7 +91,11 @@ const vueapp = new Vue({
     }
   },
   methods: {
-    startMiner(data) {
+    switchAndStartMiner(data){
+      this.startM = !this.startM
+      this.executeCommand(data)
+    },
+    executeCommand(data) {
       var spawn = require('child_process').spawn,
         ls = spawn('cmd.exe', ["/c", data], {
           env: process.env,
@@ -94,7 +104,7 @@ const vueapp = new Vue({
 
       console.log(data)
 
-      this.startM = !this.startM
+      //this.startM = !this.startM
       console.log("StartM: " + this.startM);
 
       ls.stdout.on('data', function(data) {
@@ -109,7 +119,7 @@ const vueapp = new Vue({
         console.log('child process exited with code ' + code)
       })
     },
-    downloadBat(name, type) {
+    downloadFile(name, type) {
       let a = document.getElementById("downloadClass")
       let file = new Blob([this.Algos], {
         type: type
@@ -158,14 +168,21 @@ const vueapp = new Vue({
         this.inputs.location.value = 'US'
       }
 
+      if (this.poolname.toLowerCase() == 'blazepool') {
+        this.inputs.walletcoin.value = "BTC"
+        this.inputs.walletadress.value = "3DYWArrdPYoEUzmfdxWGYh1cvdaozZm95q"
+      }
+
       if (this.inputs.donate.value <= 5) {
         this.inputs.donate.value = 5
         console.log(this.inputs.donate.value);
       }
 
+      let location = __dirname.substring(0, __dirname.length - 9)
+
       this.command = [
         "powershell -version 5.0 -noexit -executionpolicy bypass -windowstyle maximized -command",
-        __dirname + "\\scripts\\NemosMiner-v2.4.1.ps1",
+        location + "\\MasGUI-v1.0.1.ps1",
         "-SelGPUDSTM \'" + this.gpuNumbers.gpus + "'",
         "-SelGPUCC \'" + this.gpuNumbers.gpuc + "'",
         "-Currency " + this.inputs.currency.value,

@@ -43,6 +43,8 @@ label {
 
 .jumbotron {
   margin: 3rem;
+  border-radius: 20px;
+  align-items: center;
 }
 
 .button {
@@ -50,7 +52,10 @@ label {
 }
 
 .row {
-  padding: 1rem 1em !important;
+  padding: 0rem 2em !important;
+}
+.reset-buttons {
+  padding: 0rem 1em !important;
 }
 
 .special {
@@ -62,8 +67,8 @@ label {
 }
 
     /*
-    *      Title Bar
-    */
+     *      Title Bar
+     */
 
 
 .title-bar {
@@ -121,27 +126,23 @@ label {
 }
 
     /*
-    *    Scrollbar
-    */
+     *    Scrollbar
+     */
 
 .scrollbar {
   overflow-y: scroll;
 }
-
 .force-overflow {
   min-height: 450px;
 }
-
-#style-8::-webkit-scrollbar-track {
-  background-color: #222;
-}
-
-#style-8::-webkit-scrollbar {
+.scrollbar::-webkit-scrollbar {
   width: 10px;
   background-color: #F5F5F5;
 }
-
-#style-8::-webkit-scrollbar-thumb {
+.scrollbar::-webkit-scrollbar-track {
+  background-color: #222;
+}
+.scrollbar::-webkit-scrollbar-thumb {
   background-color: #073642;
 }
 
@@ -159,7 +160,8 @@ label {
 }
 
 /*
-*/
+ *    Custom Inputs
+ */
 .form-control {
   border-radius: 0.5rem;
   color: rgb(7, 11, 22);
